@@ -1,28 +1,40 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Authentication v-if="!currentUser"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import store from '@/store/index';
+import Authentication from '@/components/Authentication/Authentication.vue';
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    Authentication
+  },
+  computed: {
+    currentUser(){
+      return store.state.currentUser;
+    }
   }
 }
 </script>
 
 <style lang="scss">
+@font-face{
+  font-family: 'Chalet New York Nineteen Seventy';
+  src: url('./assets/chalet-new-york-nineteen-seventy.otf');
+}
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,700&display=swap');
+body{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  height: 100vh;
+}
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+  height: 100%;
 }
 </style>
