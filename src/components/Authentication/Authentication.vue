@@ -4,7 +4,7 @@
     <Login v-if="isLogin"/>
     <transition name="slide">
       <div class="authentication__title" v-if="!isRegister && !isLogin">
-        <img src="@/assets/logo_white.png">
+        <img src="@/assets/logo.svg">
         <h1>tinder lacznosci</h1>
       </div>
     </transition>
@@ -38,7 +38,7 @@ export default {
 .authentication{
   background: linear-gradient(#DD4587, #FF8941);
   margin: 0;
-  height: 100%;
+  min-height: 100%;
   box-sizing: border-box;
   padding: 50px 20px;
 

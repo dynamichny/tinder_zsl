@@ -26,11 +26,9 @@ export default {
       if(this.login && this.password){
         firebase.auth().signInWithEmailAndPassword(this.login, this.password)
         .then(() => {
-          db.collection('users').doc(this.login).get()
-          .then(res => {
-             store.commit('setUser', res.data());
+          db.collection('users').doc(this.login).onSnapshot(res => {
+            store.commit('setUser', res.data());
           })
-          .catch(err => alert(err));
         })
         .catch(err => alert(err));
       }

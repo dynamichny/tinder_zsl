@@ -1,17 +1,23 @@
 <template>
   <div id="app">
     <Authentication v-if="!currentUser"/>
+    <Preferences v-if="currentUser && !currentUser.preferences.isSet" />
+    <Home v-if="currentUser" />
   </div>
 </template>
 
 <script>
 import store from '@/store/index';
 import Authentication from '@/components/Authentication/Authentication.vue';
+import Preferences from '@/components/Preferences/Preferences.vue';
+import Home from '@/components/Home/Home.vue';
 
 export default {
   name: 'app',
   components: {
-    Authentication
+    Authentication,
+    Preferences,
+    Home
   },
   computed: {
     currentUser(){
@@ -30,11 +36,14 @@ export default {
 body{
   margin: 0;
   padding: 0;
-  height: 100%;
   height: 100vh;
 }
 #app {
   font-family: 'Montserrat', Helvetica, Arial, sans-serif;
   height: 100%;
+  box-sizing: border-box;
+}
+button{
+  cursor: pointer;
 }
 </style>

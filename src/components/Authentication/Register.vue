@@ -10,7 +10,7 @@
         <label for="klasa">Klasa</label>
         <select name="klasa" v-model="klasa" required>
           <option value="0">1 po podstawówie</option>
-          <option value="1">1 po gimnazjum</option>
+          <option value="1">1 po gimnazjum</option> 
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>
@@ -25,7 +25,14 @@
           <option value="elektronik">elektronik</option>
           <option value="teleinformatyk">teleinformatyk</option>
         </select>
-
+      </div>
+      <div class="plec select">
+        <label for="plec">Płeć</label>
+        <select name="plec" v-model="plec" required>
+          <option value="k">Kobieta</option>
+          <option value="m">Mężczyzna</option>
+          <option value="i">Inne</option>
+        </select>
       </div>
       <button type="submit">Załóż konto</button>
     </form>
@@ -48,6 +55,8 @@ export default {
       lastname:  '',
       klasa: null,
       kierunek: null,
+      plec: null,
+
     }
   },
   methods: {
@@ -62,15 +71,17 @@ export default {
             klasa: this.klasa,
             kierunek: this.kierunek,
             matches: [],
+            plec: this.plec,
+            preferences: {
+              isSet: false,
+            }
           });
           firebase.auth().signInWithEmailAndPassword( this.login, this.password )
           .then(() => {
-            db.collection('users').doc(this.login).get()
-            .then(res => {
+            db.collection('users').doc(this.login).onSnapshot(res => {
               store.commit('setUser', res.data());
             });
           })
-          .catch(err => alert(err))
         })
         .catch(err => alert(err))
       }
@@ -81,7 +92,6 @@ export default {
 
 <style scoped lang='scss'>
 .register{
-  height: 100%;
   box-sizing: border-box;
 }
 form{
@@ -119,7 +129,6 @@ input, select{
 }
 button{
   background: black;
-  height: 100px;
   color: white;
   border: none;
   padding: 15px;
