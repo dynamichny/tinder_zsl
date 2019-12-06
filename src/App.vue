@@ -37,10 +37,12 @@ body{
   margin: 0;
   padding: 0;
   height: 100vh;
+  width: 100%;
 }
 #app {
   font-family: 'Montserrat', Helvetica, Arial, sans-serif;
   height: 100%;
+  width: 100%;
   box-sizing: border-box;
 }
 button{

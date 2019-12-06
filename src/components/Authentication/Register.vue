@@ -74,7 +74,13 @@ export default {
             plec: this.plec,
             preferences: {
               isSet: false,
-            }
+              plcie: [],
+              klasy: [],
+            },
+            photos: [],
+            description: '',
+            instagram: '',
+            snapchat: '',
           });
           firebase.auth().signInWithEmailAndPassword( this.login, this.password )
           .then(() => {

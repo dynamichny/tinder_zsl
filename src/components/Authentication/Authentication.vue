@@ -4,7 +4,7 @@
     <Login v-if="isLogin"/>
     <transition name="slide">
       <div class="authentication__title" v-if="!isRegister && !isLogin">
-        <img src="@/assets/logo.svg">
+        <img src="@/assets/logo_white.png">
         <h1>tinder lacznosci</h1>
       </div>
     </transition>
