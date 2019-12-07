@@ -34,15 +34,14 @@ export default {
         reader.onload = e => {
           this.imageUploaded = true;
           this.imgSrc = e.target.result;
-          this.$emit("src", this.imgSrc == undefined ? '' : this.imgSrc);
-          
+          this.$emit("src", this.imgSrc == undefined ? "" : input.files[0]);
         };
         reader.readAsDataURL(input.files[0]);
       }
     }
   },
   mounted() {
-    this.$emit("src", this.imgSrc == undefined ? '' : this.imgSrc);
+    this.$emit("src", this.imgSrc == undefined ? "" : this.imgSrc);
   }
 };
 </script>
@@ -62,8 +61,8 @@ export default {
   box-sizing: border-box;
 }
 .photo {
-  height: 100%;
-  margin: 0 auto;
+  max-height: 100%;
+  object-fit: cover;
 }
 .input-label {
   position: absolute;
