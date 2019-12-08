@@ -2,6 +2,7 @@
   <div class="myprofile">
     <div class="overview">
       <div class="photo-container">
+        <img src="@/assets/loading.svg" class="loading">
         <img class="overview-photo" :src="photo" />
       </div>
       <h2>{{name}}</h2>
@@ -63,12 +64,24 @@ export default {
   justify-content: center;
   align-items: center;
   image-orientation: from-image;
+  position: relative;
+  max-width: 330px;
+  max-height: 330px;
 }
 .overview-photo {
   width: 100%;
   image-orientation: from-image;
+  z-index: 11;
 }
-
+.loading{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 10;
+}
 .buttons {
   display: flex;
   flex-direction: column;

@@ -5,16 +5,19 @@
       <img :src="require(`@/assets/logo${state == 1 ? '_colored' : ''}.svg`)" style="width: 70px;" @click="state = 1">
       <img :src="require(`@/assets/chat${state == 2 ? '_colored' : ''}.svg`)" style="width: 50px;" @click="state = 2">
     </nav>
-  <MyProfile v-if="state == 0"/>
+  <MyProfile v-if="state === 0"/>
+  <Swipes v-if="state === 1" />
   </div>
 </template>
 
 <script>
-import MyProfile from './MyProfile';
+import MyProfile from './MyProfile/MyProfile.vue';
+import Swipes from './Swipes/Swipes.vue';
 export default {
   name: 'Home',
   components: {
-    MyProfile
+    MyProfile,
+    Swipes
   },
   data(){
     return {
