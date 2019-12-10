@@ -13,6 +13,9 @@
 <script>
 import MyProfile from './MyProfile/MyProfile.vue';
 import Swipes from './Swipes/Swipes.vue';
+import db from "@/components/firebaseInit.js";
+import store from '@/store/index';
+
 export default {
   name: 'Home',
   components: {
@@ -23,6 +26,13 @@ export default {
     return {
       state: 1,
     }
+  },
+  mounted(){
+    db.collection('users').get()
+    .then((res) => {
+      let resultsArray = res.docs.map(x => x.data());
+      store.commit('setMatches', resultsArray);
+    })
   }
 };
 </script>
