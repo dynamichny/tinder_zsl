@@ -1,30 +1,35 @@
 <template>
   <div class="swipes">
     <transition-group name="slide">
-      <Poster v-for="(person, index) in matches " :key="person.email" :position="index" :data="person" />
+      <Poster
+        v-for="(person, index) in matches "
+        :key="person.email"
+        :position="index"
+        :data="person"
+      />
     </transition-group>
   </div>
 </template>
 
 <script>
-import Poster from './Poster.vue';
-import store from '@/store/index';
+import Poster from "./Poster.vue";
+import store from "@/store/index";
 
 export default {
-  name: 'Swipes',
+  name: "Swipes",
   components: {
-    Poster,
+    Poster
   },
   computed: {
-    matches(){
-      return store.state.matches.slice(0, 4);
-    },
+    matches() {
+      return store.state.matches;
+    }
   }
 };
 </script>
 
 <style scoped lang='scss'>
-.swipes{
+.swipes {
   padding: 10px;
   height: 100%;
   box-sizing: border-box;
@@ -34,7 +39,8 @@ export default {
   transform-origin: top;
   transition: transform 1s;
 }
-.slide-enter, .slide-leave-to{
+.slide-enter,
+.slide-leave-to {
   transform-origin: top;
   transform: translateY(-10px);
 }

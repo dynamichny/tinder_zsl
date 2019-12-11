@@ -38,6 +38,7 @@ body{
   padding: 0;
   height: 100vh;
   width: 100%;
+  overflow-x: hidden;
 }
 #app {
   font-family: 'Montserrat', Helvetica, Arial, sans-serif;
