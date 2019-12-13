@@ -15,6 +15,9 @@
     </nav>
     <MyProfile v-if="state === 0" />
     <Swipes v-if="state === 1" />
+    <transition name="slide">
+      <More :data="moreData" v-if="isMore" />
+    </transition>
   </div>
 </template>
 
@@ -23,17 +26,27 @@ import MyProfile from "./MyProfile/MyProfile.vue";
 import Swipes from "./Swipes/Swipes.vue";
 import db from "@/components/firebaseInit.js";
 import store from "@/store/index";
+import More from '@/components/Home/Swipes/More.vue';
 
 export default {
   name: "Home",
   components: {
     MyProfile,
-    Swipes
+    Swipes,
+    More,
   },
   data() {
     return {
       state: 1
     };
+  },
+  computed: {
+    isMore(){
+      return store.state.isMore;
+    },
+    moreData(){
+      return store.state.moreData;
+    }
   },
   mounted() {
     db.collection("users")
@@ -73,5 +86,11 @@ nav {
   img {
     height: 40px;
   }
+}
+.slide-enter-active, .slide-leave-active {
+  transition: all .5s;
+}
+.slide-enter, .slide-leave-to /* .slide-leave-active below version 2.1.8 */ {
+  transform: translateX(100vw);
 }
 </style>

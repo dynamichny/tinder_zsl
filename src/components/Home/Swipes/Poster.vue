@@ -29,6 +29,7 @@
         v-if="data.photos.length>1"
       ></div>
     </div>
+    <div class="more" @click="showMore">i</div>
   </div>
 </template>
 
@@ -114,13 +115,19 @@ export default {
       );
       return;
     },
-    addToPairs(){
+    addToPairs() {
       this.$refs["poster"].style.display = "none";
       let pairs = store.state.currentUser.pairs;
       pairs.push(this.data.email);
-      db.collection('users').doc(store.state.currentUser.email).update({
-        pairs
-      })
+      db.collection("users")
+        .doc(store.state.currentUser.email)
+        .update({
+          pairs
+        });
+    },
+    showMore() {
+      store.commit("setMoreData", this.data);
+      store.commit("changeIsMore", true);
     }
   },
   watch: {
@@ -201,5 +208,21 @@ export default {
   h1 {
     margin: 0;
   }
+}
+.more {
+  position: absolute;
+  bottom: 30px;
+  right: 10px;
+  color: black;
+  background: white;
+  font-weight: bold;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  cursor: pointer;
 }
 </style>
