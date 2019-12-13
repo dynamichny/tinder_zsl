@@ -71,7 +71,7 @@ export default {
 .overview-photo {
   width: 100%;
   image-orientation: from-image;
-  z-index: 11;
+  z-index: 10;
 }
 .loading{
   position: absolute;

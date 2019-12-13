@@ -57,6 +57,7 @@ export default {
   overflow-x: hidden;
 }
 nav {
+  z-index: 100;
   position: fixed;
   top: 0;
   left: 0;

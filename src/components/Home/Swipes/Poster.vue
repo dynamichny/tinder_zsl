@@ -13,7 +13,7 @@
   >
     <div class="tekst">
       <h1>{{data.firstname}}</h1>
-      <span>{{data.klasa}} {{data.kierunek}}</span>
+      <span>klasa {{data.klasa == 0 ? '1 po podstawówce' : data.klasa == 1 ? '1 po gimnazjum' : data.klasa}}, {{data.kierunek}}</span>
     </div>
     <div class="color" ref="color">
       <div
@@ -34,6 +34,7 @@
 
 <script>
 import store from "@/store/index";
+import db from "@/components/firebaseInit.js";
 
 export default {
   name: "Poster",
@@ -78,7 +79,7 @@ export default {
       this.isHolded = false;
       this.$refs["poster"].style.transition = "all .3s";
       if (this.xDifference > 130) {
-        this.removeFromMatches();
+        this.addToPairs();
       } else if (this.xDifference < -130) {
         this.removeFromMatches();
       }
@@ -112,6 +113,14 @@ export default {
         1
       );
       return;
+    },
+    addToPairs(){
+      this.$refs["poster"].style.display = "none";
+      let pairs = store.state.currentUser.pairs;
+      pairs.push(this.data.email);
+      db.collection('users').doc(store.state.currentUser.email).update({
+        pairs
+      })
     }
   },
   watch: {
@@ -137,12 +146,14 @@ export default {
   padding: 5px;
   box-sizing: border-box;
   max-width: 700px;
+  width: 97%;
   margin: 20px 10px;
   position: absolute;
   left: 0;
   right: 0;
   z-index: 10;
   overflow: hidden;
+  margin: auto;
 }
 .transitionIfNotHolded {
   transition: transform 0.5s;

@@ -21,12 +21,12 @@
       <p>Jakimi klasami jesteś zainteresowan{{ currentUser.plec == 'k' ? 'a' : 'y'}}?</p>
       <div class="checkboxes klasy">
         <div>
-          <input type="checkbox" id="1g" value="1g" v-model="klasy" />
-          <label for="1g">1 po gimnazjum</label>
+          <input type="checkbox" id="1p" value="0" v-model="klasy" />
+          <label for="1p">1 po podstawówce</label>
         </div>
         <div>
-          <input type="checkbox" id="1p" value="1p" v-model="klasy" />
-          <label for="1p">1 po podstawówce</label>
+          <input type="checkbox" id="1g" value="1" v-model="klasy" />
+          <label for="1g">1 po gimnazjum</label>
         </div>
         <div>
           <input type="checkbox" id="2" value="2" v-model="klasy" />
@@ -63,10 +63,10 @@ export default {
       return store.state.currentUser;
     },
     getPlcie() {
-      return store.state.currentUser.preferences.plcie;
+      return store.state.currentUser.preferences.genders;
     },
     getKlasy() {
-      return store.state.currentUser.preferences.klasy;
+      return store.state.currentUser.preferences.classes;
     }
   },
   methods: {
@@ -76,8 +76,8 @@ export default {
           .doc(this.currentUser.email)
           .update({
             preferences: {
-              plcie: this.plcie,
-              klasy: this.klasy,
+              genders: this.plcie,
+              classes: this.klasy,
               isSet: true
             }
           });

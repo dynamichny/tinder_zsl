@@ -22,7 +22,19 @@ export default {
   },
   computed: {
     matches() {
-      return store.state.matches;
+      let currentUser = store.state.currentUser;
+      let preferedGender = currentUser.preferences.genders;
+      let preferedClasses = currentUser.preferences.classes;
+      let alreadyMatched = currentUser.pairs;
+      let users = [...store.state.matches];
+      users.splice(users.findIndex(user => user.email == currentUser.email), 1); //delete current user from array
+      users = users.filter(user => {
+        let isGender = preferedGender.includes(user.plec);
+        let isClass = preferedClasses.includes(user.klasa);
+        let isMatched = alreadyMatched.includes(user.email)
+        return (isGender && isClass && !isMatched);
+      });
+      return users;
     }
   }
 };
@@ -34,6 +46,8 @@ export default {
   height: 100%;
   box-sizing: border-box;
   overflow: hidden;
+  position: relative;
+  margin: auto;
 }
 .slide-enter-active {
   transform-origin: top;
