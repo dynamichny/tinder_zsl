@@ -1,9 +1,16 @@
 <template>
   <div class="login">
+    <div class="head">
+      <button class="close" @click.prevent="$emit('close')">Powrót</button>
+      <span>Logowanie</span>
+    </div>
     <form @submit.prevent="handleSubmit()">
       <input type="text" placeholder="Email" v-model="login" required>
       <input type="password" placeholder="Password" v-model="password" required>
-      <button type="submit">Zaloguj</button>
+      <button type="submit" :disabled="loading">
+        <span v-if="!loading">Zaloguj</span>
+        <img src="@/assets/button-loading.svg" alt="Loading..." v-if="loading">
+      </button>
     </form>
   </div>
 </template>
@@ -19,13 +26,16 @@ export default {
     return {
       login: '',
       password: '',
+      loading: false,
     }
   },
   methods: {
     handleSubmit(){
       if(this.login && this.password){
+        this.loading = true;
         firebase.auth().signInWithEmailAndPassword(this.login, this.password)
         .then(() => {
+          this.loading = false;
           db.collection('users').doc(this.login).onSnapshot(res => {
             store.commit('setUser', res.data());
           })
@@ -77,6 +87,23 @@ button{
   font-size: 18px;
   margin: 10px;
   border-radius: 5px;
+  height: 50px;
+}
+.head{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px;
+  margin: auto;
   box-sizing: border-box;
+  padding: 10px;
+  
+  button{
+    margin: 0;
+  }
+  span{
+    font-size: 24px;
+    font-weight: bold;
+  }
 }
 </style>

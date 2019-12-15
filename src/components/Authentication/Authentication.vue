@@ -1,16 +1,18 @@
 <template>
   <div class="authentication">
-    <Register v-if="isRegister"/>
-    <Login v-if="isLogin"/>
-    <transition name="slide">
-      <div class="authentication__title" v-if="!isRegister && !isLogin">
-        <img src="@/assets/logo_white.png">
-        <h1>tinder lacznosci</h1>
+    <Register v-if="isRegister" @close="isRegister = false"/>
+    <Login v-if="isLogin" @close="isLogin = false"/>
+    <div v-if="!isRegister && !isLogin">
+      <transition name="slide">
+        <div class="authentication__title">
+          <img src="@/assets/logo_white.png">
+          <h1>tinder lacznosci</h1>
+        </div>
+      </transition>
+      <div class="authentication__buttons">
+        <button @click="isLogin = true" >Zaloguj</button>
+        <button @click="isRegister = true" >Zarejestruj</button>
       </div>
-    </transition>
-    <div class="authentication__buttons" v-if="!isRegister && !isLogin">
-      <button @click="isLogin = true">Zaloguj</button>
-      <button @click="isRegister = true">Zarejestruj</button>
     </div>
   </div>
 </template>
@@ -40,7 +42,7 @@ export default {
   margin: 0;
   min-height: 100%;
   box-sizing: border-box;
-  padding: 50px 20px;
+  padding: 20px;
 
   &__title{
     margin: auto;

@@ -43,10 +43,11 @@ export default {
 <style scoped lang='scss'>
 .swipes {
   padding: 10px;
-  height: 100%;
+  width: 100%;
+  height: calc(100% - 60px);
   box-sizing: border-box;
   overflow: hidden;
-  position: relative;
+  position: absolute;
   margin: auto;
 }
 .slide-enter-active {

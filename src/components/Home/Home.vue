@@ -1,21 +1,25 @@
 <template>
   <div class="home">
     <nav>
-      <img :src="require(`@/assets/profile${state == 0 ? '_colored' : ''}.svg`)" @click="state = 0" />
+      <img :src="require(`@/assets/profile${state == 0 ? '_colored' : ''}.svg`)" @click="changeState(0)" />
       <img
         :src="require(`@/assets/logo${state == 1 ? '_colored' : ''}.svg`)"
         style="width: 70px;"
-        @click="state = 1"
+        @click="changeState(1)"
       />
       <img
         :src="require(`@/assets/chat${state == 2 ? '_colored' : ''}.svg`)"
         style="width: 50px;"
-        @click="state = 2"
+        @click="changeState(2)"
       />
     </nav>
-    <MyProfile v-if="state === 0" />
-    <Swipes v-if="state === 1" />
-    <transition name="slide">
+    <transition name="slide-from-left">
+      <MyProfile v-if="state === 0" />
+    </transition>
+    <transition name="middle">
+      <Swipes v-if="state === 1" />
+    </transition>
+    <transition name="more">
       <More :data="moreData" v-if="isMore" />
     </transition>
   </div>
@@ -37,7 +41,8 @@ export default {
   },
   data() {
     return {
-      state: 1
+      state: 1,
+      prevous: null
     };
   },
   computed: {
@@ -46,7 +51,7 @@ export default {
     },
     moreData(){
       return store.state.moreData;
-    }
+    },
   },
   mounted() {
     db.collection("users")
@@ -55,7 +60,13 @@ export default {
         let resultsArray = res.docs.map(x => x.data());
         store.commit("setMatches", resultsArray);
       });
-  }
+  },
+  methods: {
+    changeState(x){
+      this.prevous = this.state;
+      this.state = x;
+    }
+  },
 };
 </script>
 
@@ -85,12 +96,52 @@ nav {
   box-sizing: border-box;
   img {
     height: 40px;
+    cursor: pointer;
   }
 }
-.slide-enter-active, .slide-leave-active {
+.slide-from-right-enter-active{
+  transition: all .5s .3s;
+}
+
+.slide-from-right-leave-active {
   transition: all .5s;
 }
-.slide-enter, .slide-leave-to /* .slide-leave-active below version 2.1.8 */ {
+.slide-from-right-enter, .slide-from-right-leave-to  {
+  transform: translateX(100vw);
+  position: absolute;
+  left: 0;
+  right: 0;
+
+}
+.slide-from-left-enter-active{
+  transition: all .5s .3s;
+}
+.slide-from-left-leave-active {
+  transition: all .5s;
+}
+.slide-from-left-enter, .slide-from-left-leave-to {
+  transform: translateX(-100vw);
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+.more-enter-active, .more-leave-active {
+  transition: all .5s;
+}
+.more-enter, .more-leave-to {
   transform: translateX(100vw);
 }
+
+.middle-enter-active{
+  transition: all .5s .3s;
+}
+.middle-leave-active {
+  transition: all .5s ;
+}
+.middle-enter, .middle-leave-to {
+  transform: translateY(-100vh) scale(.5);
+  opacity: 0;
+  top: 60px;
+}
+
 </style>

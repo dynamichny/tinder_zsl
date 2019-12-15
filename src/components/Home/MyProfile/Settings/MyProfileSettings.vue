@@ -17,7 +17,10 @@
       <h4>SNAPCHAT</h4>
       <input type="text" v-model="snapchat" />
     </div>
-    <button @click="saveSettings">Zapisz</button>
+    <button @click="saveSettings" :disabled="loading">
+      <span v-if="!loading">Zapisz</span>
+      <img src="@/assets/button-loading.svg" alt="Loading..." v-if="loading">
+    </button>
   </div>
 </template>
 
@@ -39,7 +42,8 @@ export default {
       snapchat: "",
       img1: "",
       img2: "",
-      randomId: ""
+      randomId: "",
+      loading: false,
     };
   },
   computed: {
@@ -55,6 +59,7 @@ export default {
   },
   methods: {
     saveSettings() {
+      this.loading = true;
       db.collection("users")
         .doc(this.username)
         .update({
@@ -70,8 +75,12 @@ export default {
             await this.replacePhoto(this.img2, 1);
           }
           this.$emit("save");
+          this.loading = false;
         })
-        .catch(err => alert(err));
+        .catch(err => {
+          alert(err)
+          this.loading = false;
+          })
     },
     generateRandomId() {
       this.randomId =
@@ -182,6 +191,10 @@ button {
   border-radius: 5px;
   font-size: 18px;
   outline: none;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 150px;
 }
 </style>

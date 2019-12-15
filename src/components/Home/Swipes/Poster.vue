@@ -56,11 +56,13 @@ export default {
       return store.state.matches;
     },
     posterBg() {
-      return {
+      return this.data.photos.length > 0 ? {
         background: `url(${
           this.data.photos[this.photoDisplayed]
         }) no-repeat center center/cover`
-      };
+      } : {
+        background: `url(https://komuna.warszawa.pl/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png) no-repeat center center/cover`
+      }
     }
   },
   methods: {
@@ -156,6 +158,7 @@ export default {
   width: 97%;
   margin: 20px 10px;
   position: absolute;
+  top: 20px;
   left: 0;
   right: 0;
   z-index: 10;

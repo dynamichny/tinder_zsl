@@ -1,5 +1,9 @@
 <template>
   <div class="register">
+    <div class="head">
+      <button class="close" @click.prevent="$emit('close')">Powrót</button>
+      <span>Rejestracja</span>
+    </div>
     <form @submit.prevent="handleSubmit()">
       <input type="email" placeholder="Email" v-model="login" required>
       <input type="password" placeholder="Haslo" v-model="password" required>
@@ -34,7 +38,10 @@
           <option value="i">Inne</option>
         </select>
       </div>
-      <button type="submit">Załóż konto</button>
+      <button type="submit" :disabled="loading">
+        <span v-if="!loading">Załóż konto</span>
+        <img src="@/assets/button-loading.svg" alt="Loading..." v-if="loading">
+        </button>
     </form>
   </div>
 </template>
@@ -56,12 +63,14 @@ export default {
       klasa: null,
       kierunek: null,
       plec: null,
+      loading: false,
 
     }
   },
   methods: {
     handleSubmit(){
       if(this.login && this.password && this.password == this.repassword && this.firstname && this.lastname && this.klasa && this.kierunek){
+        this.loading = true;
         firebase.auth().createUserWithEmailAndPassword( this.login, this.password )
         .then(() => {
           db.collection('users').doc(this.login).set({
@@ -84,6 +93,7 @@ export default {
           });
           firebase.auth().signInWithEmailAndPassword( this.login, this.password )
           .then(() => {
+            this.loading = false;
             db.collection('users').doc(this.login).onSnapshot(res => {
               store.commit('setUser', res.data());
             });
@@ -142,6 +152,22 @@ button{
   font-size: 18px;
   margin: 10px;
   border-radius: 5px;
+  height: 50px;
+}
+.head{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px;
+  margin: auto;
   box-sizing: border-box;
+  padding: 10px;
+  button{
+    margin: 0;
+  }
+  span{
+    font-size: 24px;
+    font-weight: bold;
+  }
 }
 </style>
