@@ -1,7 +1,10 @@
 <template>
   <div class="home">
     <nav>
-      <img :src="require(`@/assets/profile${state == 0 ? '_colored' : ''}.svg`)" @click="changeState(0)" />
+      <img
+        :src="require(`@/assets/profile${state == 0 ? '_colored' : ''}.svg`)"
+        @click="changeState(0)"
+      />
       <img
         :src="require(`@/assets/logo${state == 1 ? '_colored' : ''}.svg`)"
         style="width: 70px;"
@@ -22,6 +25,12 @@
     <transition name="more">
       <More :data="moreData" v-if="isMore" />
     </transition>
+    <transition name="slide-from-right">
+      <Conversations v-if="state === 2" />
+    </transition>
+    <transition name="more">
+      <Chat v-if="isChat" />
+    </transition>
   </div>
 </template>
 
@@ -30,7 +39,9 @@ import MyProfile from "./MyProfile/MyProfile.vue";
 import Swipes from "./Swipes/Swipes.vue";
 import db from "@/components/firebaseInit.js";
 import store from "@/store/index";
-import More from '@/components/Home/Swipes/More.vue';
+import More from "@/components/Home/Swipes/More.vue";
+import Conversations from "@/components/Home/Conversations/Conversations.vue";
+import Chat from "@/components/Home/Conversations/Chat.vue";
 
 export default {
   name: "Home",
@@ -38,6 +49,8 @@ export default {
     MyProfile,
     Swipes,
     More,
+    Conversations,
+    Chat
   },
   data() {
     return {
@@ -46,12 +59,15 @@ export default {
     };
   },
   computed: {
-    isMore(){
+    isMore() {
       return store.state.isMore;
     },
-    moreData(){
+    moreData() {
       return store.state.moreData;
     },
+    isChat(){
+      return store.state.isChat;
+    }
   },
   mounted() {
     db.collection("users")
@@ -60,13 +76,29 @@ export default {
         let resultsArray = res.docs.map(x => x.data());
         store.commit("setMatches", resultsArray);
       });
+    db.collection("Conversationss").onSnapshot(res => {
+      const Conversationss = res.docs.map(doc => doc.data());
+      store.commit("setConversations", Conversationss);
+    });
+
+    db.collection("users").onSnapshot(res => {
+      const users = res.docs.map(doc => doc.data());
+      store.commit("setUsers", users);
+    });
+    /**db.collection('users').get().then(res => {
+      res.docs.map(user => {
+        let arr = user.data()
+        arr.chats = [];
+        db.collection('users').doc(arr.email).update(arr)
+      })
+    })*/
   },
   methods: {
-    changeState(x){
+    changeState(x) {
       this.prevous = this.state;
       this.state = x;
     }
-  },
+  }
 };
 </script>
 
@@ -99,49 +131,53 @@ nav {
     cursor: pointer;
   }
 }
-.slide-from-right-enter-active{
-  transition: all .5s .3s;
+.slide-from-right-enter-active {
+  transition: all 0.5s 0.3s;
 }
 
 .slide-from-right-leave-active {
-  transition: all .5s;
+  transition: all 0.5s;
 }
-.slide-from-right-enter, .slide-from-right-leave-to  {
+.slide-from-right-enter,
+.slide-from-right-leave-to {
   transform: translateX(100vw);
   position: absolute;
+  top: 60px;
   left: 0;
   right: 0;
-
 }
-.slide-from-left-enter-active{
-  transition: all .5s .3s;
+.slide-from-left-enter-active {
+  transition: all 0.5s 0.3s;
 }
 .slide-from-left-leave-active {
-  transition: all .5s;
+  transition: all 0.5s;
 }
-.slide-from-left-enter, .slide-from-left-leave-to {
+.slide-from-left-enter,
+.slide-from-left-leave-to {
   transform: translateX(-100vw);
   position: absolute;
   left: 0;
   right: 0;
 }
-.more-enter-active, .more-leave-active {
-  transition: all .5s;
+.more-enter-active,
+.more-leave-active {
+  transition: all 0.5s;
 }
-.more-enter, .more-leave-to {
+.more-enter,
+.more-leave-to {
   transform: translateX(100vw);
 }
 
-.middle-enter-active{
-  transition: all .5s .3s;
+.middle-enter-active {
+  transition: all 0.5s 0.3s;
 }
 .middle-leave-active {
-  transition: all .5s ;
+  transition: all 0.5s;
 }
-.middle-enter, .middle-leave-to {
-  transform: translateY(-100vh) scale(.5);
+.middle-enter,
+.middle-leave-to {
+  transform: translateY(-100vh) scale(0.5);
   opacity: 0;
   top: 60px;
 }
-
 </style>

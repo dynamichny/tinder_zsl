@@ -158,6 +158,7 @@ button{
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   max-width: 800px;
   margin: auto;
   box-sizing: border-box;

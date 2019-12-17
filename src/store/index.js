@@ -8,7 +8,11 @@ export default new Vuex.Store({
     currentUser: null,
     matches: [],
     isMore: false,
-    moreData: null
+    moreData: null,
+    convos: [],
+    users: [],
+    isChat: false,
+    chatTarget: null
   },
   mutations: {
     setUser(state, user) {
@@ -22,6 +26,18 @@ export default new Vuex.Store({
     },
     setMoreData(state, data) {
       state.moreData = data;
+    },
+    setConversations(state, data) {
+      state.convos = data;
+    },
+    setUsers(state, data) {
+      state.users = data;
+    },
+    setChatState(state, data) {
+      state.isChat = data;
+    },
+    setChatTarget(state, data) {
+      state.chatTarget = data;
     }
   },
   actions: {},
