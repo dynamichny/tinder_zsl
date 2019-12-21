@@ -36,7 +36,7 @@ export default {
 
 <style scoped lang='scss'>
 .contact{
-  padding: 5px;
+  padding: 5px 8px;
 }
 .image{
   cursor: pointer;

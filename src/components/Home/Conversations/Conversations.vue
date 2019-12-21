@@ -4,21 +4,24 @@
     <div class="PairIcons">
       <PairIcon v-for="pair in pairs" :key="pair" :email="pair" />
     </div>
+    <h4>Wiadomości</h4>
     <div class="converations">
-
+      <ConversationLink v-for="convo in conversations" :data="convo" :key="convo.id"/>
     </div>
   </div>
 </template>
 
 <script>
 import store from "@/store/index";
-import PairIcon from "./PairIcon.vue";
 import db from "@/components/firebaseInit.js";
+import PairIcon from "./PairIcon.vue";
+import ConversationLink from "./ConversationLink.vue";
 
 export default {
   name: "Conversations",
   components: {
-    PairIcon
+    PairIcon,
+    ConversationLink
   },
   data() {
     return {};
@@ -40,7 +43,8 @@ export default {
       return pairs.reverse();
     },
     conversations() {
-      return store.state.conversations;
+      let existing = store.state.conversations.filter(convo => convo.data.exist);
+      return existing.sort((a, b) => b.data.lastMsg.when.seconds -  a.data.lastMsg.when.seconds);
     }
   },
   created() {
@@ -65,9 +69,8 @@ export default {
   background: white;
   margin: auto;
   max-width: 700px;
-  padding: 10px;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 .PairIcons {
   display: flex;
@@ -77,6 +80,6 @@ export default {
   margin: auto;
 }
 h4 {
-  margin: 10px 0 0;
+  margin: 10px 0 0 10px;
 }
 </style>

@@ -95,23 +95,30 @@ export default {
       db.collection("chats")
         .doc(this.randomId)
         .set({
-          members: [this.currentUser.email, this.chatTargetEmail]
+          members: [this.currentUser.email, this.chatTargetEmail],
+          lastMsg: {},
+          exist: false,
         });
     },
     sendMassage() {
       if (this.inputText.length == 0) return;
-      db.collection("chats")
-        .doc(this.chat.id)
-        .collection("messages")
-        .add({
+      let msg = {
           author: this.currentUser.email,
           content: this.inputText,
           when: new Date()
-        })
+        };
+      db.collection("chats")
+        .doc(this.chat.id)
+        .collection("messages")
+        .add(msg)
         .then(() => {
           this.inputText = "";
         })
         .catch(err => alert(err));
+      db.collection('chats').doc(this.chat.id).update({
+        exist: true,
+        lastMsg: msg
+      })
     },
     getMessages() {
       db.collection("chats")
