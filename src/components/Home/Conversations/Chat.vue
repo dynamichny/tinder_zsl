@@ -6,27 +6,40 @@
       </button>
       <div class="target" @click="showMore">
         <div class="image" :style="profileImage"></div>
-        <p class="name">{{targetUser.firstname}}</p>
+        <p class="name">{{chatTargetData.firstname}}</p>
       </div>
     </header>
-    <div class="messages"></div>
+    <div class="messages" ref="messages">
+      <Message v-for="(message, index) in messages" :key="index" :data="message" :currentUserEmail="currentUser.email" :prevous="messages[index - 1]" @mount="chatChange = $event" />
+    </div>
     <div class="input">
-      <textarea placeholder="Wpisz wiadomość" v-model="inputText" ></textarea>
-      <input type="submit" @click.prevent="sendMassage" value="Wyślij" :class="inputText.length > 0 ? 'red' : 'gray'">
+      <textarea placeholder="Wpisz wiadomość" v-model="inputText"></textarea>
+      <input
+        type="submit"
+        @click="sendMassage"
+        value="Wyślij"
+        :class="inputText.length > 0 ? 'red' : 'gray'"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import store from "@/store/index";
-//import db from "@/components/firebaseInit.js";
+import db from "@/components/firebaseInit.js";
+import Message from './Message.vue';
 
 export default {
   name: "Chat",
+  components: {
+    Message
+  },
   data() {
     return {
-      chat: {},
-      inputText: '',
+      inputText: "",
+      randomId: "",
+      messages: [],
+      chatChange: null,
     };
   },
   computed: {
@@ -36,29 +49,97 @@ export default {
     chatTargetEmail() {
       return store.state.chatTarget;
     },
-    targetUser() {
+    chatTargetData() {
       let users = store.state.users;
       return users.find(user => user.email == this.chatTargetEmail);
     },
     profileImage() {
-      return this.targetUser.photos.length > 0
+      return this.chatTargetData.photos.length > 0
         ? {
             background: `url(${
-              this.targetUser.photos[0]
+              this.chatTargetData.photos[0]
             }) no-repeat center center/cover`
           }
         : {
             background: `url(https://komuna.warszawa.pl/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png) no-repeat center center/cover`
           };
+    },
+    chat() {
+      let chats = store.state.conversations;
+      let chatData = chats.find(chat =>
+        chat.data.members.includes(this.chatTargetEmail)
+      );
+      if (chatData == undefined) {
+        this.createConversation();
+      }
+      return chatData;
     }
   },
   methods: {
     showMore() {
-      store.commit("setMoreData", this.targetUser);
+      store.commit("setMoreData", this.chatTargetData);
       store.commit("changeIsMore", true);
     },
     closeChat() {
       store.commit("setChatState", false);
+    },
+    generateRandomId() {
+      this.randomId =
+        "_" +
+        Math.random()
+          .toString(36)
+          .substr(2, 9);
+    },
+    createConversation() {
+      this.generateRandomId();
+      db.collection("chats")
+        .doc(this.randomId)
+        .set({
+          members: [this.currentUser.email, this.chatTargetEmail]
+        });
+    },
+    sendMassage() {
+      if (this.inputText.length == 0) return;
+      db.collection("chats")
+        .doc(this.chat.id)
+        .collection("messages")
+        .add({
+          author: this.currentUser.email,
+          content: this.inputText,
+          when: new Date()
+        })
+        .then(() => {
+          this.inputText = "";
+        })
+        .catch(err => alert(err));
+    },
+    getMessages() {
+      db.collection("chats")
+        .doc(this.chat.id)
+        .collection("messages")
+        .onSnapshot(res => {
+          if (res.empty != true) {
+            let messages = res.docs.map(doc => doc.data());
+            this.messages = messages.sort(
+              (a, b) => a.when.seconds - b.when.seconds
+            );
+          }
+        });
+    },
+    goToBottom(){
+      const el = this.$refs.messages;
+      el.scrollTop = el.scrollHeight;
+    }
+  },
+  mounted() {
+    if (this.chat) this.getMessages();
+  },
+  watch: {
+    chat() {
+      this.getMessages();
+    },
+    chatChange(){
+      this.goToBottom()
     }
   }
 };
@@ -75,6 +156,7 @@ export default {
   z-index: 999;
   max-width: 700px;
   width: 100%;
+  height: 100%;
   margin: auto;
 }
 header {
@@ -82,14 +164,16 @@ header {
   top: 0;
   left: 0;
   right: 0;
+  max-width: 700px;
+  margin: auto;
   width: 100%;
   height: auto;
   border-bottom: 1px solid rgb(199, 199, 199);
-  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: 1010;
   button {
     position: absolute;
     left: 10px;
@@ -98,7 +182,7 @@ header {
     background: none;
     border: none;
     outline: none;
-    img{
+    img {
       height: 50%;
     }
   }
@@ -121,7 +205,7 @@ header {
   border-radius: 50%;
   margin: auto;
 }
-.input{
+.input {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -129,26 +213,27 @@ header {
   max-width: 700px;
   width: 95%;
   margin: auto auto 10px;
-  display:flex;
-  flex-direction:row;
-  border:1px solid grey;
+  display: flex;
+  flex-direction: row;
+  border: 1px solid grey;
   padding: 5px;
   box-sizing: border-box;
   border-radius: 19px;
   background: rgb(243, 243, 243);
-  textarea{
+  textarea {
     font-size: 16px;
-    font-family: 'Montserrat', Helvetica, Arial, sans-serif;
-    flex-grow:2;
+    font-family: "Montserrat", Helvetica, Arial, sans-serif;
+    flex-grow: 2;
     background: rgb(243, 243, 243);
-    border:none;
+    border: none;
     height: 100%;
-    &:focus{
+    resize: none;
+    &:focus {
       outline: none;
     }
   }
-  input[type=submit]{
-    font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+  input[type="submit"] {
+    font-family: "Montserrat", Helvetica, Arial, sans-serif;
     background: none;
     border: none;
     cursor: pointer;
@@ -156,10 +241,19 @@ header {
     padding: 0;
   }
 }
-.red{
-  color: #DD4587;
+.red {
+  color: #dd4587;
 }
-.gray{
+.gray {
   color: rgb(129, 129, 129);
+}
+.messages {
+  height: calc(100% - 145px);
+  margin: 75px 0 50px;
+  overflow-y: scroll;
+  z-index: 1000;
+}
+pre{
+  margin: 0;
 }
 </style>

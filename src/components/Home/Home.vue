@@ -76,10 +76,6 @@ export default {
         let resultsArray = res.docs.map(x => x.data());
         store.commit("setMatches", resultsArray);
       });
-    db.collection("Conversationss").onSnapshot(res => {
-      const Conversationss = res.docs.map(doc => doc.data());
-      store.commit("setConversations", Conversationss);
-    });
 
     db.collection("users").onSnapshot(res => {
       const users = res.docs.map(doc => doc.data());

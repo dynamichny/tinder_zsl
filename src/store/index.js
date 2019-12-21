@@ -9,7 +9,7 @@ export default new Vuex.Store({
     matches: [],
     isMore: false,
     moreData: null,
-    convos: [],
+    conversations: [],
     users: [],
     isChat: false,
     chatTarget: null
@@ -28,7 +28,7 @@ export default new Vuex.Store({
       state.moreData = data;
     },
     setConversations(state, data) {
-      state.convos = data;
+      state.conversations = data;
     },
     setUsers(state, data) {
       state.users = data;
