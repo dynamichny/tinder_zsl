@@ -1,20 +1,22 @@
 <template>
   <div class="home">
     <nav>
-      <img
-        :src="require(`@/assets/profile${state == 0 ? '_colored' : ''}.svg`)"
-        @click="changeState(0)"
-      />
-      <img
-        :src="require(`@/assets/logo${state == 1 ? '_colored' : ''}.svg`)"
-        style="width: 70px;"
-        @click="changeState(1)"
-      />
-      <img
-        :src="require(`@/assets/chat${state == 2 ? '_colored' : ''}.svg`)"
-        style="width: 50px;"
-        @click="changeState(2)"
-      />
+      <div>
+        <img
+          :src="require(`@/assets/profile${state == 0 ? '_colored' : ''}.svg`)"
+          @click="changeState(0)"
+        />
+        <img
+          :src="require(`@/assets/logo${state == 1 ? '_colored' : ''}.svg`)"
+          style="width: 70px;"
+          @click="changeState(1)"
+        />
+        <img
+          :src="require(`@/assets/chat${state == 2 ? '_colored' : ''}.svg`)"
+          style="width: 50px;"
+          @click="changeState(2)"
+        />
+      </div>
     </nav>
     <transition name="slide-from-left">
       <MyProfile v-if="state === 0" />
@@ -114,17 +116,22 @@ nav {
   top: 0;
   left: 0;
   right: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 10px 20px;
   background: white;
-  max-width: 700px;
   margin: 0 auto;
   box-sizing: border-box;
-  img {
-    height: 40px;
-    cursor: pointer;
+  div{
+    margin: auto;
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    img {
+      height: 40px;
+      cursor: pointer;
+    }
   }
 }
 .slide-from-right-enter-active {

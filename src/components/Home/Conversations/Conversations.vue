@@ -6,7 +6,9 @@
     </div>
     <h4>Wiadomości</h4>
     <div class="converations">
-      <ConversationLink v-for="convo in conversations" :data="convo" :key="convo.id"/>
+      <transition-group name="convos">
+        <ConversationLink v-for="convo in conversations" :data="convo" :key="convo.id"/>
+      </transition-group>
     </div>
   </div>
 </template>
@@ -66,7 +68,6 @@ export default {
 .conversations {
   width: 100%;
   height: 100%;
-  background: white;
   margin: auto;
   max-width: 700px;
   box-sizing: border-box;
@@ -76,10 +77,17 @@ export default {
   display: flex;
   align-items: center;
   justify-content: left;
-  overflow-x: auto;
-  margin: auto;
+  overflow: auto;
+  margin: auto 5px;
+  background: white;
+  border-radius: 10px;
+  padding: 5px;
+  box-shadow: 0 0 10px rgb(231, 231, 231);
 }
 h4 {
-  margin: 10px 0 0 10px;
+  margin: 10px 0 5px 10px;
+}
+.convos-move {
+  transition: all .5s;
 }
 </style>

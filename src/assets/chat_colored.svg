@@ -1,16 +1,17 @@
-<svg width="120" height="91" viewBox="0 0 120 91" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M119.5 37C119.5 45.4345 111.002 58.8023 104 65.677C97.7501 71.813 90.8027 73.2234 81 76.5C73.3792 79.0472 67.7418 79 59 79C26.4152 79 0 61.3152 0 39.5C0 17.6848 26.4152 0 59 0C91.5848 0 119.5 15.1848 119.5 37Z" fill="url(#paint0_linear)"/>
-<path d="M81 76.5L119.5 90.677L104 65.677C97.7501 71.813 90.8027 73.2234 81 76.5Z" fill="url(#paint1_linear)"/>
-<defs>
-<linearGradient id="paint0_linear" x1="60" y1="-0.322994" x2="60" y2="78.677" gradientUnits="userSpaceOnUse">
-<stop stop-color="#FF8941"/>
-<stop offset="0.0001" stop-color="#DD4587"/>
-<stop offset="1" stop-color="#FF8941"/>
-</linearGradient>
-<linearGradient id="paint1_linear" x1="60" y1="-0.322994" x2="60" y2="78.677" gradientUnits="userSpaceOnUse">
-<stop stop-color="#FF8941"/>
-<stop offset="0.0001" stop-color="#DD4587"/>
-<stop offset="1" stop-color="#FF8941"/>
-</linearGradient>
-</defs>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="138.456" height="96.288" viewBox="0 0 138.456 96.288">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.93" y1="-0.072" x2="0.175" y2="0.95" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#dd4587"/>
+      <stop offset="1" stop-color="#ff8941"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="0.727" y1="-0.069" x2="0.292" y2="0.928" xlink:href="#linear-gradient"/>
+  </defs>
+  <g id="chat_colored" transform="translate(-1058.044 -299.927)">
+    <g id="chat" transform="translate(1077 287)">
+      <path id="Path_2" data-name="Path 2" d="M119.5,90.677l-15.5-25Z" fill="#d1d1d1"/>
+      <path id="Path_4" data-name="Path 4" d="M.938,48.418" fill="none" stroke="#707070" stroke-width="1"/>
+    </g>
+    <path id="Path_3" data-name="Path 3" d="M1081.046,311.593c5.777-10.163,12.311-16.219,30.248-20.718s25.9-5.387,46.615-1.45,29.419,13.052,35.427,22.168,2.693,17.61,0,23.2-12.431,17.817-12.431,17.817l14.459,21.4-37.456-11.042s-29.212,8.08-53.659-3.315-26.032-26.2-26.032-26.2S1075.269,321.756,1081.046,311.593Z" transform="translate(-6 13)" fill="url(#linear-gradient)"/>
+    <path id="Path_5" data-name="Path 5" d="M1163.872,304.152c-4.311-7.1-9.353-11.188-22.735-14.33s-18.766-2.923-34.612-.754-21.95,8.718-26.432,15.084-1.665,14.715,2.484,20.938,6.6,9.336,6.6,9.336l-3.848,17.5,21.195-11.9s21.8,5.642,40.035-2.315,19.423-18.293,19.423-18.293S1168.183,311.25,1163.872,304.152Z" transform="translate(-17.085 39.378)" stroke="#fff" stroke-width="5" fill="url(#linear-gradient-2)"/>
+  </g>
 </svg>

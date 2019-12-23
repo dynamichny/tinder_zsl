@@ -58,8 +58,13 @@ export default {
 
 <style scoped lang='scss'>
 .conversationLink {
-  margin: 20px 0;
+  margin: 10px 5px;
+  cursor: pointer;
   display: flex;
+  background: white;
+  border-radius: 10px;
+  padding: 5px;
+  box-shadow: 0 0 10px rgb(238, 238, 238);
 }
 .image {
   margin: 0 20px;
