@@ -7,7 +7,7 @@
     <h4>Wiadomości</h4>
     <div class="converations">
       <transition-group name="convos">
-        <ConversationLink v-for="convo in conversations" :data="convo" :key="convo.id"/>
+        <ConversationLink v-for="convo in conversations" :data="convo" :key="convo.id" />
       </transition-group>
     </div>
   </div>
@@ -45,8 +45,12 @@ export default {
       return pairs.reverse();
     },
     conversations() {
-      let existing = store.state.conversations.filter(convo => convo.data.exist);
-      return existing.sort((a, b) => b.data.lastMsg.when.seconds -  a.data.lastMsg.when.seconds);
+      let existing = store.state.conversations.filter(
+        convo => convo.data.exist
+      );
+      return existing.sort(
+        (a, b) => b.data.lastMsg.when.seconds - a.data.lastMsg.when.seconds
+      );
     }
   },
   created() {
@@ -57,7 +61,9 @@ export default {
       this.currentUser.email
     );
     chats.onSnapshot(ref => {
-      const chatsData = ref.docs.map(doc => { return {data: doc.data(), id: doc.id}});
+      const chatsData = ref.docs.map(doc => {
+        return { data: doc.data(), id: doc.id };
+      });
       store.commit("setConversations", chatsData);
     });
   }
@@ -88,6 +94,6 @@ h4 {
   margin: 10px 0 5px 10px;
 }
 .convos-move {
-  transition: all .5s;
+  transition: all 0.5s;
 }
 </style>

@@ -38,6 +38,16 @@ export default new Vuex.Store({
     },
     setChatTarget(state, data) {
       state.chatTarget = data;
+    },
+    logout(state) {
+      state.currentUser = null;
+      state.matches = [];
+      state.isMore = false;
+      state.moreData = null;
+      state.conversations = [];
+      state.users = [];
+      state.isChat = false;
+      state.chatTarget = null;
     }
   },
   actions: {},

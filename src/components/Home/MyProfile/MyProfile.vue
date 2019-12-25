@@ -2,7 +2,7 @@
   <div class="myprofile">
     <div class="overview">
       <div class="photo-container">
-        <img src="@/assets/loading.svg" class="loading">
+        <img src="@/assets/loading.svg" class="loading" />
         <img class="overview-photo" :src="photo" />
       </div>
       <h2>{{name}}</h2>
@@ -10,6 +10,7 @@
     <div class="buttons">
       <button @click="settings = true">Ustawienia profilu</button>
       <button @click="preferences = true">Zmień preferencje</button>
+      <button @click="logout" class="logout">Wyloguj</button>
     </div>
     <Preferences v-if="preferences" @save="preferences = false" />
     <MyProfileSettings v-if="settings" @save="settings = false" />
@@ -20,6 +21,7 @@
 import store from "@/store/index";
 import Preferences from "@/components/Preferences/Preferences.vue";
 import MyProfileSettings from "./Settings/MyProfileSettings.vue";
+import firebase from "firebase";
 
 export default {
   name: "MyProfile",
@@ -41,6 +43,21 @@ export default {
       return store.state.currentUser.photos.length > 0
         ? store.state.currentUser.photos[0]
         : "https://komuna.warszawa.pl/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png";
+    }
+  },
+  methods: {
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(
+          () => {
+            store.commit("logout");
+          },
+          error => {
+            alert(error);
+          }
+        );
     }
   }
 };
@@ -73,7 +90,7 @@ export default {
   image-orientation: from-image;
   z-index: 10;
 }
-.loading{
+.loading {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -85,17 +102,22 @@ export default {
 .buttons {
   display: flex;
   flex-direction: column;
-  button {
-    margin: 10px auto;
-    padding: 20px;
-    background: black;
-    color: white;
-    border: none;
-    font-family: "Montserrat";
-    font-size: 18px;
-    border-radius: 5px;
-    max-width: 650px;
-    width: 80%;
-  }
+}
+button {
+  margin: 10px auto;
+  padding: 20px;
+  background: #151b1e;
+  color: white;
+  border: none;
+  font-family: "Montserrat";
+  font-size: 18px;
+  border-radius: 5px;
+  max-width: 650px;
+  width: 80%;
+}
+.logout {
+  margin: 30px auto;
+  background: #4d6369;
+  padding: 15px;
 }
 </style>
