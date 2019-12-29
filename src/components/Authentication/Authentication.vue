@@ -1,7 +1,11 @@
 <template>
   <div class="authentication">
-    <Register v-if="isRegister" @close="isRegister = false" />
-    <Login v-if="isLogin" @close="isLogin = false" />
+    <transition name="apear">
+      <Register v-if="isRegister" @close="isRegister = false" />
+    </transition>
+    <transition name="apear">
+      <Login v-if="isLogin" @close="isLogin = false" />
+    </transition>
     <div v-if="!isRegister && !isLogin">
       <transition name="slide">
         <div class="authentication__title">
@@ -45,6 +49,10 @@ export default {
   padding: 20px;
 
   &__title {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
     margin: auto;
     text-align: center;
     color: white;
@@ -75,15 +83,18 @@ export default {
   }
 }
 
-.slide-enter-active .slide-leave-active {
-  transition: all 0.5s;
+.slide-enter-active, .slide-leave-active {
+  transition: all 3s;
 }
-.slide-enter {
-  transform: translateY(50px);
+.slide-enter, .slide-leave-to /* .apear-leave-active below version 2.1.8 */ {
   opacity: 0;
+  transform: translateY(-50px)
 }
-.slide-leave-to {
-  transform: translateY(-50px);
+
+.apear-enter-active, .apear-leave-active {
+  transition: opacity .2s;
+}
+.apear-enter, .apear-leave-to /* .apear-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
 </style>

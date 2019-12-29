@@ -5,16 +5,15 @@
       <span>Rejestracja</span>
     </div>
     <form @submit.prevent="handleSubmit()">
-      <input type="email" placeholder="Email" v-model="login" required>
-      <input type="password" placeholder="Haslo" v-model="password" required>
-      <input type="password" placeholder="Podaj haslo ponownie" v-model="repassword" required>
-      <input type="text" placeholder="Imie" v-model="firstname" required>
-      <input type="text" placeholder="Nazwisko" v-model="lastname" required>
+      <input type="email" placeholder="Email" v-model="login" required />
+      <input type="password" placeholder="Haslo" v-model="password" required />
+      <input type="password" placeholder="Podaj haslo ponownie" v-model="repassword" required />
+      <input type="text" placeholder="Imie" v-model="firstname" required />
       <div class="klasa select">
         <label for="klasa">Klasa</label>
         <select name="klasa" v-model="klasa" required>
           <option value="0">1 po podstawówie</option>
-          <option value="1">1 po gimnazjum</option> 
+          <option value="1">1 po gimnazjum</option>
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>
@@ -40,8 +39,8 @@
       </div>
       <button type="submit" :disabled="loading">
         <span v-if="!loading">Załóż konto</span>
-        <img src="@/assets/button-loading.svg" alt="Loading..." v-if="loading">
-        </button>
+        <img src="@/assets/button-loading.svg" alt="Loading..." v-if="loading" />
+      </button>
     </form>
   </div>
 </template>
@@ -49,68 +48,84 @@
 <script>
 import firebase from "firebase";
 import db from "@/components/firebaseInit.js";
-import store from '@/store/index';
+import store from "@/store/index";
 
 export default {
-  name: 'Register',
-  data(){
+  name: "Register",
+  data() {
     return {
-      login: '',
-      password: '',
-      repassword: '',
-      firstname: '',
-      lastname:  '',
+      login: "",
+      password: "",
+      repassword: "",
+      firstname: "",
       klasa: null,
       kierunek: null,
       plec: null,
-      loading: false,
-
-    }
+      loading: false
+    };
   },
   methods: {
-    handleSubmit(){
-      if(this.login && this.password && this.password == this.repassword && this.firstname && this.lastname && this.klasa && this.kierunek){
+    handleSubmit() {
+      if (
+        this.login &&
+        this.password &&
+        this.password == this.repassword &&
+        this.firstname &&
+        this.lastname &&
+        this.klasa &&
+        this.kierunek
+      ) {
         this.loading = true;
-        firebase.auth().createUserWithEmailAndPassword( this.login, this.password )
-        .then(() => {
-          db.collection('users').doc(this.login).set({
-            email: this.login,
-            firstname: this.firstname,
-            lastname: this.lastname,
-            klasa: this.klasa,
-            kierunek: this.kierunek,
-            pairs: [],
-            plec: this.plec,
-            preferences: {
-              isSet: false,
-              genders: [],
-              classes: [],
-            },
-            photos: [],
-            description: '',
-            instagram: '',
-            snapchat: '',
-          });
-          firebase.auth().signInWithEmailAndPassword( this.login, this.password )
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(this.login, this.password)
           .then(() => {
-            this.loading = false;
-            db.collection('users').doc(this.login).onSnapshot(res => {
-              store.commit('setUser', res.data());
-            });
+            db.collection("users")
+              .doc(this.login)
+              .set({
+                email: this.login,
+                firstname: this.firstname,
+                klasa: this.klasa,
+                kierunek: this.kierunek,
+                pairs: [],
+                plec: this.plec,
+                preferences: {
+                  isSet: false,
+                  genders: [],
+                  classes: []
+                },
+                photos: [],
+                description: "",
+                instagram: "",
+                snapchat: ""
+              });
+            firebase
+              .auth()
+              .signInWithEmailAndPassword(this.login, this.password)
+              .then(() => {
+                this.loading = false;
+                db.collection("users")
+                  .doc(this.login)
+                  .onSnapshot(res => {
+                    store.commit("setUser", res.data());
+                  });
+              });
           })
-        })
-        .catch(err => alert(err))
+          .catch(err => {
+            this.loading = false;
+            alert(err);
+          });
       }
     }
-  },
+  }
 };
 </script>
 
 <style scoped lang='scss'>
-.register{
+.register {
   box-sizing: border-box;
 }
-form{
+form {
   height: 100%;
   max-width: 800px;
   margin: auto;
@@ -119,23 +134,23 @@ form{
   justify-content: space-around;
   box-sizing: border-box;
 }
-input, select{
+input,
+select {
   background: white;
   padding: 15px;
   margin: 10px;
   box-sizing: border-box;
   border: none;
   border-radius: 5px;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   outline: none;
-  transition: all .3s;
+  transition: all 0.3s;
   font-size: 16px;
-  &:focus{
-    border: 1px solid black;
+  &:focus {
     box-shadow: 0px 0px 10px rgb(0, 0, 0);
   }
 }
-.select{
+.select {
   margin: 10px;
   display: flex;
   justify-content: space-between;
@@ -143,18 +158,18 @@ input, select{
   font-size: 18px;
   box-sizing: border-box;
 }
-button{
+button {
   background: black;
   color: white;
   border: none;
   padding: 15px;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-size: 18px;
   margin: 10px;
   border-radius: 5px;
   height: 50px;
 }
-.head{
+.head {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -163,12 +178,16 @@ button{
   margin: auto;
   box-sizing: border-box;
   padding: 10px;
-  button{
+  button {
     margin: 0;
   }
-  span{
+  span {
     font-size: 24px;
     font-weight: bold;
   }
+}
+
+label {
+  font-size: 20px;
 }
 </style>

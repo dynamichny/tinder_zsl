@@ -61,6 +61,8 @@ export default {
   margin: 10px 5px;
   cursor: pointer;
   display: flex;
+  align-items: center;
+  justify-content: flex-start;
   background: white;
   border-radius: 10px;
   padding: 5px;
@@ -76,9 +78,14 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-start;
+  max-width: calc(100% - 120px);
 
   p{
     margin: 5px 0;
+    overflow: hidden;
+    height: 20px;
+    max-width: 100%;
   }
 }
 </style>

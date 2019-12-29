@@ -51,7 +51,10 @@ export default {
                 store.commit("setUser", res.data());
               });
           })
-          .catch(err => alert(err));
+          .catch(err => {
+            this.loading = false;
+            alert(err);
+          });
       }
     },
     passReset() {
@@ -62,8 +65,7 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-.register {
-  height: 100%;
+.login {
   box-sizing: border-box;
 }
 form {
@@ -87,7 +89,6 @@ input {
   transition: all 0.3s;
   font-size: 16px;
   &:focus {
-    border: 1px solid black;
     box-shadow: 0px 0px 10px rgb(0, 0, 0);
   }
 }

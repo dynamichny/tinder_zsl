@@ -31,7 +31,7 @@ export default {
         .then(() => {
           this.sent = true;
         })
-        .catch(err => console.log(err));
+        .catch(err => alert(err));
     }
   }
 };
