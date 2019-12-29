@@ -6,18 +6,18 @@
     <transition name="apear">
       <Login v-if="isLogin" @close="isLogin = false" />
     </transition>
-    <div v-if="!isRegister && !isLogin">
-      <transition name="slide">
+    <transition name="apear">
+      <div v-if="!isRegister && !isLogin">
         <div class="authentication__title">
           <img src="@/assets/logo_white.png" />
           <h1>tinder łączności</h1>
         </div>
-      </transition>
-      <div class="authentication__buttons">
-        <button @click="isLogin = true">Zaloguj</button>
-        <button @click="isRegister = true">Zarejestruj</button>
+        <div class="authentication__buttons">
+          <button @click="isLogin = true">Zaloguj</button>
+          <button @click="isRegister = true">Zarejestruj</button>
+        </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -83,16 +83,9 @@ export default {
   }
 }
 
-.slide-enter-active, .slide-leave-active {
-  transition: all 3s;
-}
-.slide-enter, .slide-leave-to /* .apear-leave-active below version 2.1.8 */ {
-  opacity: 0;
-  transform: translateY(-50px)
-}
-
-.apear-enter-active, .apear-leave-active {
-  transition: opacity .2s;
+.apear-enter-active,
+.apear-leave-active {
+  transition: opacity 0.2s;
 }
 .apear-enter, .apear-leave-to /* .apear-leave-active below version 2.1.8 */ {
   opacity: 0;

@@ -1,4 +1,13 @@
-# tinder_zsl
+# Tinder Łączności
+It's myy copy of tinder foro society of my school. It's a good way to get to know new people, which you might not even see in school corridors. 
+
+### Used technology: 
+* VueJS
+* VueX
+* Firebase
+
+### Demo
+https://tinder-zsl.netlify.com/
 
 ## Project setup
 ```
@@ -24,6 +33,3 @@ npm run test
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
