@@ -71,7 +71,6 @@ export default {
         this.password &&
         this.password == this.repassword &&
         this.firstname &&
-        this.lastname &&
         this.klasa &&
         this.kierunek
       ) {
@@ -80,6 +79,7 @@ export default {
           .auth()
           .createUserWithEmailAndPassword(this.login, this.password)
           .then(() => {
+            console.log('xdddd')
             db.collection("users")
               .doc(this.login)
               .set({

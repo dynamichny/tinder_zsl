@@ -98,7 +98,6 @@ export default {
 .preferences {
   box-sizing: border-box;
   padding: 10px;
-  max-width: 700px;
   margin: auto;
   z-index: 1000;
   position: absolute;
@@ -109,11 +108,14 @@ export default {
   background: white;
 }
 h1 {
-  margin: 0;
+  margin: 0 auto;
+  max-width: 700px;
 }
 form {
   display: flex;
   flex-direction: column;
+  max-width: 700px;
+  margin: auto;
 }
 .checkboxes {
   display: flex;
