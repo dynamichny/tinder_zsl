@@ -79,7 +79,6 @@ export default {
           .auth()
           .createUserWithEmailAndPassword(this.login, this.password)
           .then(() => {
-            console.log('xdddd')
             db.collection("users")
               .doc(this.login)
               .set({

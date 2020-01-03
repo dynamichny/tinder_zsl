@@ -8,7 +8,7 @@
     </transition>
     <transition name="apear">
       <div v-if="!isRegister && !isLogin">
-        <div class="authentication__title">
+        <div class="authentication__title" @click="$router.push({ path: '/about' })">
           <img src="@/assets/logo_white.png" />
           <h1>tinder łączności</h1>
         </div>
@@ -56,6 +56,7 @@ export default {
     margin: auto;
     text-align: center;
     color: white;
+    cursor: pointer;
     img {
       width: 200px;
     }

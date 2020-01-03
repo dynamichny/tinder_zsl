@@ -5,10 +5,7 @@
 </template>
 
 <style lang="scss">
-@font-face{
-  font-family: 'Chalet New York Nineteen Seventy';
-  src: url('./assets/chalet-new-york-nineteen-seventy.otf');
-}
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,700&display=swap');
 #app{
   height: 100vh;
 }

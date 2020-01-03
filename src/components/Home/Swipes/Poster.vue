@@ -148,7 +148,7 @@ export default {
 <style scoped lang='scss'>
 .poster-wrapper {
   background: white;
-  height: 75%;
+  height: 85%;
   width: inherit;
   display: block;
   border-radius: 8px;
