@@ -23,12 +23,8 @@
 </template>
 
 <script>
-import anime from 'animejs';
 export default {
   name: 'AboutHero',
-  mounted(){
-    console.log(anime)
-  }
 };
 </script>
 
