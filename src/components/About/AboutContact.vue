@@ -4,17 +4,51 @@
       <h4>Kontakt</h4>
       <p>Jeżeli widzisz jakąś potencjalną zmiane, buga, masz pomysł na rozwój aplikacji lub po prostu chcesz nawiązać kontakt to po napisz do mnie wiadomość.</p>
     </div>
-    <form>
-      <input type="email" placeholder="Twój email" />
-      <textarea placeholder="w czym moge Ci pomóc?"></textarea>
-      <button type="submit">Wyślij</button>
-    </form>
+    <div class="form">
+      <transition name="form" mode="out-in">
+      <form @submit.prevent="sendMessage" v-if="!sent">
+        <input type="email" placeholder="Twój email" v-model="emailAddress" required/>
+        <textarea placeholder="w czym moge Ci pomóc?" v-model="emailText" required></textarea>
+        <button type="submit">Wyślij</button>
+      </form>
+      <div class="sent" v-else>
+        <div class="circle">
+          <img src="@/assets/about/true.svg">
+        </div>
+        <p>Wiadomość wysłana!</p>
+        <a class="next" @click="writeAnother">Napisz kolejną</a>
+      </div>
+      </transition>
+    </div>
   </div>
 </template>
 
 <script>
+import db from "@/components/firebaseInit.js";
 export default {
-  name: "AboutContact"
+  name: "AboutContact",
+  data(){
+    return{
+      emailAddress: '',
+      emailText: '',
+      sent: false,
+    }
+  },
+  methods: {
+    sendMessage(){
+      db.collection('contact').add({
+        address: this.emailAddress,
+        content: this.emailText
+      }).then(()=> {
+        this.sent = true;
+      })
+    },
+    writeAnother(){
+      this.emailAddress = '';
+      this.emailText = '';
+      this.sent = false;
+    }
+  },
 };
 </script>
 
@@ -47,7 +81,9 @@ export default {
     }
   }
 }
-
+.form{
+  position: relative;
+}
 form {
   padding: 80px 0 0;
   display: flex;
@@ -96,5 +132,45 @@ form {
     min-width: 100px;
     width: 60%;
   }
+}
+.sent{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin: 50px auto;
+  .circle{
+    background: linear-gradient(250deg, rgb(221, 69, 135) 0%, #FF8941 100%);
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img{
+      width: 30px;
+    }
+  }
+  p{
+    margin: 15px auto 5px;
+  }
+  .next{
+    font-size: 12px;
+    margin: 0;
+    background: -webkit-linear-gradient(250deg, #DD4587, #FF8941);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor: pointer;
+  }
+}
+
+.form-enter-active,
+.form-leave-active {
+  transition: opacity 0.2s 0.3s;
+}
+.form-enter, .form-leave-to  {
+  opacity: 0;
 }
 </style>
