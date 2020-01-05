@@ -98,6 +98,7 @@ form {
     font-weight: 600;
     font-size: 18px;
     outline: none;
+    border-radius: 0;
     transition: all 0.2s;
     @media (max-width: 650px){
       width: 95%;

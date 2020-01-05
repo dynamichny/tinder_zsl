@@ -1,18 +1,18 @@
 <template>
   <div class="hero">
     <nav>
-      <a href="#info">Informacje</a>
-      <a href="#contact">Kontakt</a>
+      <a @click="scrollTo('#info')">Informacje</a>
+      <a @click="scrollTo('#contact')">Kontakt</a>
     </nav>
     <div class="content">
-      <div class="left-content">
-        <div>
+      <div class="left-content" v-rellax="{speed: 3}">
+        <div v-rellax="{speed: .5}">
           <img src="@/assets/logo_white.png">
           <h1>tinder łączności</h1> 
         </div>
-        <button @click="$router.push({ path: '/app' })">Rozpocznij</button>
+        <button @click="$router.push({ path: '/app' })" v-rellax="{speed: .6}">Rozpocznij</button>
       </div>
-      <div class="right-content">
+      <div class="right-content" v-rellax="{speed: 2.5}">
         <img src="@/assets/about/phone.png">
       </div>
     </div>
@@ -25,6 +25,16 @@
 <script>
 export default {
   name: 'AboutHero',
+  methods: {
+    scrollTo(id){
+      console.dir(document.querySelector(id))
+      const offsetTop = document.querySelector(id).offsetTop;
+      window.scrollTo({
+        top: offsetTop,
+        behavior: 'smooth'
+      })
+    }
+  }
 };
 </script>
 
