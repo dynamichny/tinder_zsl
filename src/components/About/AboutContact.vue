@@ -6,18 +6,18 @@
     </div>
     <div class="form">
       <transition name="form" mode="out-in">
-      <form @submit.prevent="sendMessage" v-if="!sent">
-        <input type="email" placeholder="Twój email" v-model="emailAddress" required/>
-        <textarea placeholder="w czym moge Ci pomóc?" v-model="emailText" required></textarea>
-        <button type="submit">Wyślij</button>
-      </form>
-      <div class="sent" v-else>
-        <div class="circle">
-          <img src="@/assets/about/true.svg">
+        <form @submit.prevent="sendMessage" v-if="!sent">
+          <input type="email" placeholder="Twój email" v-model="emailAddress" required />
+          <textarea placeholder="w czym moge Ci pomóc?" v-model="emailText" required></textarea>
+          <button type="submit">Wyślij</button>
+        </form>
+        <div class="sent" v-else>
+          <div class="circle">
+            <img src="@/assets/about/true.svg" />
+          </div>
+          <p>Wiadomość wysłana!</p>
+          <a class="next" @click="writeAnother">Napisz kolejną</a>
         </div>
-        <p>Wiadomość wysłana!</p>
-        <a class="next" @click="writeAnother">Napisz kolejną</a>
-      </div>
       </transition>
     </div>
   </div>
@@ -27,28 +27,30 @@
 import db from "@/components/firebaseInit.js";
 export default {
   name: "AboutContact",
-  data(){
-    return{
-      emailAddress: '',
-      emailText: '',
-      sent: false,
-    }
+  data() {
+    return {
+      emailAddress: "",
+      emailText: "",
+      sent: false
+    };
   },
   methods: {
-    sendMessage(){
-      db.collection('contact').add({
-        address: this.emailAddress,
-        content: this.emailText
-      }).then(()=> {
-        this.sent = true;
-      })
+    sendMessage() {
+      db.collection("contact")
+        .add({
+          address: this.emailAddress,
+          content: this.emailText
+        })
+        .then(() => {
+          this.sent = true;
+        });
     },
-    writeAnother(){
-      this.emailAddress = '';
-      this.emailText = '';
+    writeAnother() {
+      this.emailAddress = "";
+      this.emailText = "";
       this.sent = false;
     }
-  },
+  }
 };
 </script>
 
@@ -59,7 +61,7 @@ export default {
   grid-gap: 10px;
   padding: 0 10%;
   margin: 0 0 150px;
-  @media (max-width: 650px){
+  @media (max-width: 650px) {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -75,13 +77,13 @@ export default {
     font-size: 20px;
     width: 70%;
     margin: 20px 30px;
-    @media (max-width: 650px){
+    @media (max-width: 650px) {
       width: 95%;
       margin: 5px 20px;
     }
   }
 }
-.form{
+.form {
   position: relative;
 }
 form {
@@ -100,7 +102,7 @@ form {
     outline: none;
     border-radius: 0;
     transition: all 0.2s;
-    @media (max-width: 650px){
+    @media (max-width: 650px) {
       width: 95%;
     }
     &::placeholder {
@@ -126,7 +128,7 @@ form {
     padding: 10px;
     font-family: "Montserrat", Helvetica, Arial, sans-serif;
     color: white;
-    background: linear-gradient(251deg, #DD4587AD 0%, #FF8941 100%);
+    background: linear-gradient(251deg, #dd4587ad 0%, #ff8941 100%);
     font-size: 24px;
     border: none;
     max-width: 200px;
@@ -134,7 +136,7 @@ form {
     width: 60%;
   }
 }
-.sent{
+.sent {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -142,25 +144,25 @@ form {
   justify-content: center;
   font-weight: bold;
   margin: 50px auto;
-  .circle{
-    background: linear-gradient(250deg, rgb(221, 69, 135) 0%, #FF8941 100%);
+  .circle {
+    background: linear-gradient(250deg, rgb(221, 69, 135) 0%, #ff8941 100%);
     width: 65px;
     height: 65px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    img{
+    img {
       width: 30px;
     }
   }
-  p{
+  p {
     margin: 15px auto 5px;
   }
-  .next{
+  .next {
     font-size: 12px;
     margin: 0;
-    background: -webkit-linear-gradient(250deg, #DD4587, #FF8941);
+    background: -webkit-linear-gradient(250deg, #dd4587, #ff8941);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     cursor: pointer;
@@ -171,7 +173,8 @@ form {
 .form-leave-active {
   transition: opacity 0.2s 0.3s;
 }
-.form-enter, .form-leave-to  {
+.form-enter,
+.form-leave-to {
   opacity: 0;
 }
 </style>

@@ -7,13 +7,13 @@
     <div class="content">
       <div class="left-content" v-rellax="{speed: 3}">
         <div v-rellax="{speed: .5}">
-          <img src="@/assets/logo_white.png">
-          <h1>tinder łączności</h1> 
+          <img src="@/assets/logo_white.png" />
+          <h1>tinder łączności</h1>
         </div>
         <button @click="$router.push({ path: '/app' })" v-rellax="{speed: .6}">Rozpocznij</button>
       </div>
       <div class="right-content" v-rellax="{speed: 2.5}">
-        <img src="@/assets/about/phone.png">
+        <img src="@/assets/about/phone.png" />
       </div>
     </div>
     <div class="bg-image bg1"></div>
@@ -24,90 +24,88 @@
 
 <script>
 export default {
-  name: 'AboutHero',
+  name: "AboutHero",
   methods: {
-    scrollTo(id){
-      console.dir(document.querySelector(id))
+    scrollTo(id) {
       const offsetTop = document.querySelector(id).offsetTop;
       window.scrollTo({
         top: offsetTop,
-        behavior: 'smooth'
-      })
+        behavior: "smooth"
+      });
     }
   }
 };
 </script>
 
 <style scoped lang='scss'>
-.hero{
+.hero {
   min-height: 100vh;
   position: relative;
   overflow: hidden;
 }
-.bg-image{
+.bg-image {
   position: absolute;
   background-repeat: no-repeat;
   background-size: 100% auto;
   width: 100%;
   height: 100%;
 }
-.bg1{
-  top:  0;
+.bg1 {
+  top: 0;
   right: 0;
-  z-index:0;
+  z-index: 0;
   background-image: url("../../assets/about/bg1.svg");
-  background-position: bottom right; 
+  background-position: bottom right;
 }
-.bg2{
+.bg2 {
   bottom: 0;
   left: 0;
   z-index: -1;
   background-image: url("../../assets/about/bg2.svg");
-  background-position: bottom left; 
+  background-position: bottom left;
 }
-.bg3{
+.bg3 {
   bottom: -5px;
   left: 0;
   right: 0;
   z-index: 1;
   background-image: url("../../assets/about/bg_footer.svg");
-  background-position: bottom center; 
+  background-position: bottom center;
 }
 
-nav{
+nav {
   padding: 3%;
   display: flex;
   flex-wrap: wrap;
   font-weight: 500;
   z-index: 100;
-  a{
+  a {
     color: #414141;
     text-decoration: none;
     font-size: 25px;
     margin: 0 50px;
     cursor: pointer;
-      z-index: 100;
+    z-index: 100;
   }
   @media (max-width: 470px) {
     padding: 30px 0;
     justify-content: space-around;
-    a{
+    a {
       margin: 0 5px;
     }
   }
-
 }
 
-.content{
+.content {
   z-index: 5;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
-.left-content{
+.left-content {
   z-index: 10;
   position: relative;
-  background: url('../../assets/about/hero_shape.svg') no-repeat center/100%;
+  background: url("../../assets/about/hero_shape.svg") no-repeat center/100%;
   padding: 20px;
   width: 900px;
   height: 550px;
@@ -126,64 +124,62 @@ nav{
     top: 0;
     bottom: 0;
     margin: auto;
-    background: url('../../assets/about/hero_shape.svg') no-repeat center/100%;
-    div{
-      img{
+    background: url("../../assets/about/hero_shape.svg") no-repeat center/100%;
+    div {
+      img {
         height: 60px;
       }
-      h1{
+      h1 {
         font-size: 50px;
         overflow-wrap: break-word;
       }
     }
   }
   @media (max-width: 650px) {
-    background: url('../../assets/about/hero_shape.svg') no-repeat center/130%;
+    background: url("../../assets/about/hero_shape.svg") no-repeat center/130%;
     text-align: center;
-    div{
+    div {
       flex-wrap: wrap;
-      h1{
-          font-size: 36px;
+      h1 {
+        font-size: 36px;
       }
-      img{
-        filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, .4));
+      img {
+        filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.4));
       }
     }
   }
   @media (max-width: 400px) {
-    background: url('../../assets/about/hero_shape.svg') no-repeat center/150%;
-
+    background: url("../../assets/about/hero_shape.svg") no-repeat center/150%;
   }
 
-  div{
+  div {
     display: flex;
     justify-content: space-around;
     align-items: center;
   }
-  h1{
+  h1 {
     color: white;
     font-size: 64px;
     display: table;
   }
-  button{
+  button {
     border-radius: 50px;
     padding: 16px 100px;
     background: white;
     border: none;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     font-size: 24px;
     color: #707070;
     @media (max-width: 650px) {
       padding: 16px 60px;
-      box-shadow: 0 3px 6px rgba(0, 0, 0, .40);
-
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
     }
   }
 }
-.right-content{
+.right-content {
   z-index: 10;
   margin: 0 10px;
-  img{
+  img {
     height: 600px;
   }
   @media (max-width: 900px) {
