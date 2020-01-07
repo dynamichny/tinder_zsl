@@ -1,22 +1,22 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Application from "../views/Application.vue";
+import About from "../views/About.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
+    path: "/about",
+    name: "About",
+    component: About
+  },
+  {
     path: "/app",
     name: "Application",
-    component: Application
+    component: () => import("../views/Application.vue")
   },
   {
-    path: "/about",
-    name: "about",
-    component: () => import("../views/About.vue")
-  },
-  {
-    path: "/*",
+    path: "*",
     component: () => import("../views/NotFound.vue")
   }
 ];

@@ -2,7 +2,7 @@
 export default {
   name: "NotFound",
   created() {
-    this.$router.push({ path: "/app" });
+    this.$router.push({ path: "/about" });
   }
 };
 </script>
