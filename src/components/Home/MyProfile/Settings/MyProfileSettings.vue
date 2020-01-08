@@ -162,7 +162,7 @@ export default {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-
+    resize: none;
     width: 100%;
     margin: 0;
     border: 1px solid rgb(187, 187, 187);

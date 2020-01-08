@@ -69,9 +69,6 @@ export default {
       });
       store.commit("setConversations", chatsData);
     });
-  },
-  mounted() {
-    console.log();
   }
 };
 </script>
