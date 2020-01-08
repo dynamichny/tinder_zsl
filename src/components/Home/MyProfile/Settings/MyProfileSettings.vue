@@ -1,26 +1,28 @@
 <template>
   <div class="myprofile-settings">
-    <h2>Ustawienia</h2>
-    <div class="photos">
-      <ProfilePhoto :url="photos[0]" :idkey="1" @src="img1 = $event" />
-      <ProfilePhoto :url="photos[1]" :idkey="2" @src="img2 = $event" />
+    <div>
+      <h2>Ustawienia</h2>
+      <div class="photos">
+        <ProfilePhoto :photoname="photos[0]" :idkey="1" @src="img1 = $event" />
+        <ProfilePhoto :photoname="photos[1]" :idkey="2" @src="img2 = $event" />
+      </div>
+      <div class="textinput">
+        <h4>O MNIE</h4>
+        <textarea cols="30" rows="10" v-model="about"></textarea>
+      </div>
+      <div class="textinput">
+        <h4>INSTAGRAM</h4>
+        <input type="text" v-model="instagram" />
+      </div>
+      <div class="textinput">
+        <h4>SNAPCHAT</h4>
+        <input type="text" v-model="snapchat" />
+      </div>
+      <button @click="saveSettings" :disabled="loading">
+        <span v-if="!loading">Zapisz</span>
+        <img src="@/assets/button-loading.svg" alt="Loading..." v-if="loading">
+      </button>
     </div>
-    <div class="textinput">
-      <h4>O MNIE</h4>
-      <textarea cols="30" rows="10" v-model="about"></textarea>
-    </div>
-    <div class="textinput">
-      <h4>INSTAGRAM</h4>
-      <input type="text" v-model="instagram" />
-    </div>
-    <div class="textinput">
-      <h4>SNAPCHAT</h4>
-      <input type="text" v-model="snapchat" />
-    </div>
-    <button @click="saveSettings" :disabled="loading">
-      <span v-if="!loading">Zapisz</span>
-      <img src="@/assets/button-loading.svg" alt="Loading..." v-if="loading">
-    </button>
   </div>
 </template>
 
@@ -93,7 +95,7 @@ export default {
       const storage = firebase.storage();
       const storageRef = storage.ref();
       this.generateRandomId();
-      const fileName = this.randomId;
+      const fileName = `${this.randomId}.png`;
       const dirRef = storage.ref(`profilePhotos/${fileName}`);
       const task = dirRef.put(file);
       await task.on(
@@ -104,18 +106,14 @@ export default {
         },
         () => {
           let oldPath = this.currentUser.photos[index];
-          let newPath = `https://firebasestorage.googleapis.com/v0/b/tinder-zsl.appspot.com/o/profilePhotos%2F${fileName}?alt=media`;
           let userPhotos = this.photos;
-          userPhotos[index] = newPath;
+          userPhotos[index] = fileName;
           db.collection("users")
             .doc(this.username)
             .update({ photos: userPhotos });
           if (typeof oldPath !== "undefined") {
-            let oldFilename = oldPath
-              .split("profilePhotos%2F")[1]
-              .split("?alt=media")[0];
             storageRef
-              .child(`profilePhotos/${oldFilename}`)
+              .child(`profilePhotos/${oldPath}`)
               .delete()
               .then(() => {
                 //alert('Deleted old file!')
@@ -145,10 +143,13 @@ export default {
   background: #f5f7fa;
   box-sizing: border-box;
   z-index: 100;
-  overflow: auto;
   padding: 0 0 50px;
-  max-width: 700px;
   margin: auto;
+  &>div{
+    max-width: 700px;
+    margin: auto;
+    overflow: auto;
+  }
 }
 
 .photos {

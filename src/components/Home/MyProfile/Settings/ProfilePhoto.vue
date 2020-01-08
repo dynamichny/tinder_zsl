@@ -1,6 +1,6 @@
 <template>
   <div class="photo-container">
-    <img :src="imgSrc" class="photo" :ref="imgId" />
+    <img :src="newPhoto || imgSrc" class="photo" :ref="imgId" />
     <input type="file" accept="image/*" :id="id" :ref="id" @change="inputChange" />
     <label :for="id" class="input-label">
       <img src="@/assets/add.svg" alt="Add" :style="imgSrc ? 'visibility: hidden;' : ''" />
@@ -11,11 +11,11 @@
 <script>
 export default {
   name: "ProfilePhoto",
-  props: ["url", "idkey"],
+  props: ["photoname", "idkey"],
   data() {
     return {
       imageUploaded: false,
-      imgSrc: this.url
+      newPhoto: null,
     };
   },
   computed: {
@@ -24,6 +24,12 @@ export default {
     },
     imgId() {
       return `image${this.idkey}`;
+    },
+    imgSrc(){
+      if(this.photoname){
+        return `https://firebasestorage.googleapis.com/v0/b/tinder-zsl.appspot.com/o/profilePhotos%2Fthumb@256_${this.photoname}?alt=media`;
+      }
+      return false;
     }
   },
   methods: {
@@ -33,7 +39,7 @@ export default {
         let reader = new FileReader();
         reader.onload = e => {
           this.imageUploaded = true;
-          this.imgSrc = e.target.result;
+          this.newPhoto = e.target.result;
           this.$emit("src", this.imgSrc == undefined ? "" : input.files[0]);
         };
         reader.readAsDataURL(input.files[0]);
@@ -42,6 +48,7 @@ export default {
   },
   mounted() {
     this.$emit("src", this.imgSrc == undefined ? "" : this.imgSrc);
+    
   }
 };
 </script>

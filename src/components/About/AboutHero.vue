@@ -170,6 +170,7 @@ nav {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     font-size: 24px;
     color: #707070;
+    cursor: pointer;
     @media (max-width: 650px) {
       padding: 16px 60px;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);

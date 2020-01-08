@@ -51,7 +51,7 @@ export default {
     },
     bg(){
       return this.data.photos.length > 0 ? {
-        background: `url(${this.data.photos[this.photoDisplayed]}) no-repeat center center/cover`,
+        background: `url(https://firebasestorage.googleapis.com/v0/b/tinder-zsl.appspot.com/o/profilePhotos%2Fthumb@512_${this.data.photos[this.photoDisplayed]}?alt=media) no-repeat center center/cover`,
       } : {
         background: `url(https://komuna.warszawa.pl/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png) no-repeat center center/cover`
       }

@@ -40,8 +40,9 @@ export default {
       return store.state.currentUser.firstname;
     },
     photo() {
+      let photoName = store.state.currentUser.photos[0];
       return store.state.currentUser.photos.length > 0
-        ? store.state.currentUser.photos[0]
+        ? `https://firebasestorage.googleapis.com/v0/b/tinder-zsl.appspot.com/o/profilePhotos%2Fthumb@256_${photoName}?alt=media`
         : "https://komuna.warszawa.pl/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png";
     }
   },
@@ -59,7 +60,7 @@ export default {
           }
         );
     }
-  }
+  },
 };
 </script>
 
@@ -82,13 +83,20 @@ export default {
   align-items: center;
   image-orientation: from-image;
   position: relative;
-  max-width: 330px;
-  max-height: 330px;
+  max-width: 256px;
+  max-height: 256px;
 }
 .overview-photo {
   width: 100%;
+  height: 100%;
+  position:absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
   image-orientation: from-image;
   z-index: 10;
+
 }
 .loading {
   position: absolute;

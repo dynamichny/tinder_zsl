@@ -1,15 +1,18 @@
 <template>
   <div class="conversations">
-    <h4>Twoje pary</h4>
-    <div class="PairIcons">
-      <PairIcon v-for="pair in pairs" :key="pair" :email="pair" />
+    <div v-if="this.pairs.length > 0">
+      <h4>Twoje pary</h4>
+      <div class="PairIcons">
+        <PairIcon v-for="pair in pairs" :key="pair" :email="pair" />
+      </div>
+      <h4>Wiadomości</h4>
+      <div class="converations">
+        <transition-group name="convos">
+          <ConversationLink v-for="convo in conversations" :data="convo" :key="convo.id" />
+        </transition-group>
+      </div>
     </div>
-    <h4>Wiadomości</h4>
-    <div class="converations">
-      <transition-group name="convos">
-        <ConversationLink v-for="convo in conversations" :data="convo" :key="convo.id" />
-      </transition-group>
-    </div>
+    <div v-else class="no-pairs">Nie masz jeszcze żadnych par.</div>
   </div>
 </template>
 
@@ -66,6 +69,9 @@ export default {
       });
       store.commit("setConversations", chatsData);
     });
+  },
+  mounted() {
+    console.log();
   }
 };
 </script>
@@ -95,5 +101,15 @@ h4 {
 }
 .convos-move {
   transition: all 0.5s;
+}
+.no-pairs {
+  text-align: center;
+  margin: 20px 0;
+  word-wrap: break-word;
+  overflow-wrap: inherit;
+  background: -webkit-linear-gradient(45deg, #dd4587, #ff8941);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 20px;
 }
 </style>

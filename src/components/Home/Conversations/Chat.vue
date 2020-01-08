@@ -56,9 +56,9 @@ export default {
     profileImage() {
       return this.chatTargetData.photos.length > 0
         ? {
-            background: `url(${
-              this.chatTargetData.photos[0]
-            }) no-repeat center center/cover`
+            background: `url(
+              https://firebasestorage.googleapis.com/v0/b/tinder-zsl.appspot.com/o/profilePhotos%2Fthumb@64_${this.chatTargetData.photos[0]}?alt=media
+            ) no-repeat center center/cover`
           }
         : {
             background: `url(https://komuna.warszawa.pl/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png) no-repeat center center/cover`
