@@ -1,10 +1,13 @@
 <template>
   <div class="photo-container">
-    <img :src="newPhoto || imgSrc" class="photo" :ref="imgId" />
-    <input type="file" accept="image/*" :id="id" :ref="id" @change="inputChange" />
-    <label :for="id" class="input-label">
-      <img src="@/assets/add.svg" alt="Add" :style="imgSrc ? 'visibility: hidden;' : ''" />
-    </label>
+    <div class="cont">
+      <img :src="newPhoto || imgSrc" class="photo" :ref="imgId" />
+      <input type="file" accept="image/*" :id="id" :ref="id" @change="inputChange" />
+      <label :for="id" class="input-label">
+        <img src="@/assets/add.svg" alt="Add" :style="imgSrc ? 'visibility: hidden;' : ''" />
+      </label>
+    </div>
+    <div class="delete" @click="$emit('deletePhoto')" v-if="photoname">X</div>
   </div>
 </template>
 
@@ -64,12 +67,17 @@ export default {
   justify-content: center;
   border-radius: 5px;
   position: relative;
-  overflow: hidden;
   box-sizing: border-box;
+}
+.cont{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 .photo {
   max-height: 100%;
   object-fit: cover;
+  z-index: 2;
 }
 .input-label {
   position: absolute;
@@ -84,10 +92,27 @@ export default {
   align-items: center;
   justify-content: center;
   img {
+    z-index: 1;
     width: 50%;
   }
 }
 input {
   display: none;
+}
+.delete{
+  background: rgb(255, 70, 70);
+  color: white;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  z-index: 10000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  cursor: pointer;
 }
 </style>

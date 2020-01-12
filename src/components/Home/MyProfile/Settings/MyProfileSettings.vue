@@ -3,8 +3,8 @@
     <div>
       <h2>Ustawienia</h2>
       <div class="photos">
-        <ProfilePhoto :photoname="photos[0]" :idkey="1" @src="img1 = $event" />
-        <ProfilePhoto :photoname="photos[1]" :idkey="2" @src="img2 = $event" />
+        <ProfilePhoto :photoname="photos[0]" :idkey="1" @src="img1 = $event" @deletePhoto="deletePhoto(0)"/>
+        <ProfilePhoto :photoname="photos[1]" :idkey="2" @src="img2 = $event" @deletePhoto="deletePhoto(1)"/>
       </div>
       <div class="textinput">
         <h4>O MNIE</h4>
@@ -121,7 +121,26 @@ export default {
           }
         }
       );
-    }
+    },
+    deletePhoto(index){
+      const storageRef = firebase.storage().ref();
+      let photos = this.photos, name;
+      if(photos.length<2){
+        name = photos[0];
+        photos.splice(0, 1);
+      } else {
+        name = photos[index];
+        photos.splice(index, 1);
+      }
+      db.collection("users")
+          .doc(this.username)
+          .update({ photos });
+      if (typeof name !== "undefined") {
+        storageRef
+          .child(`profilePhotos/${name}`)
+          .delete()
+      }
+    },
   },
   mounted() {
     this.about = this.currentUser.description;
@@ -145,6 +164,7 @@ export default {
   z-index: 100;
   padding: 0 0 50px;
   margin: auto;
+  overflow: auto;
   &>div{
     max-width: 700px;
     margin: auto;
