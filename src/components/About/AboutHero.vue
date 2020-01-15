@@ -16,15 +16,17 @@
         <img src="@/assets/about/phone.png" />
       </div>
     </div>
-    <div class="bg-image bg1"></div>
-    <div class="bg-image bg2"></div>
-    <div class="bg-image bg3"></div>
+    <AboutHeroBg />
   </div>
 </template>
 
 <script>
+import AboutHeroBg from './AboutHeroBg.vue';
 export default {
   name: "AboutHero",
+  components: {
+    AboutHeroBg
+  },
   methods: {
     scrollTo(id) {
       const offsetTop = document.querySelector(id).offsetTop;
@@ -42,35 +44,6 @@ export default {
   min-height: 100vh;
   position: relative;
   overflow: hidden;
-}
-.bg-image {
-  position: absolute;
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  width: 100%;
-  height: 100%;
-}
-.bg1 {
-  top: 0;
-  right: 0;
-  z-index: 0;
-  background-image: url("../../assets/about/bg1.svg");
-  background-position: bottom right;
-}
-.bg2 {
-  bottom: 0;
-  left: 0;
-  z-index: -1;
-  background-image: url("../../assets/about/bg2.svg");
-  background-position: bottom left;
-}
-.bg3 {
-  bottom: -5px;
-  left: 0;
-  right: 0;
-  z-index: 1;
-  background-image: url("../../assets/about/bg_footer.svg");
-  background-position: bottom center;
 }
 
 nav {
