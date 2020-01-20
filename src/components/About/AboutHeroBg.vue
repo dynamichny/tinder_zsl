@@ -41,7 +41,7 @@ export default {
     ];
     anime({
       targets: '.uno',
-      duration: '10000',
+      duration: '8000',
       easing: 'easeInOutQuad',
       loop:true,
       d: [{ value: paths[0] }, { value: paths[1] }]

@@ -161,10 +161,13 @@ export default {
   left: 0;
   bottom: 0;
   z-index: 999;
-  max-width: 700px;
   width: 100%;
   height: 100%;
   margin: auto;
+  box-sizing: border-box;
+  @media (min-width: 700px) {
+    padding: 0 calc((100vw - 700px)/2) ;
+  }
 }
 header {
   position: fixed;

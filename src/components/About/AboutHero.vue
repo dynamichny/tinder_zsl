@@ -144,6 +144,11 @@ nav {
     font-size: 24px;
     color: #707070;
     cursor: pointer;
+    outline: none;
+    transition: box-shadow .2s;
+    &:hover, &:focus{
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.46);
+    }
     @media (max-width: 650px) {
       padding: 16px 60px;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);

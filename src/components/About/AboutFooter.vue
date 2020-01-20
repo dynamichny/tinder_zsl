@@ -33,6 +33,7 @@ footer {
 }
 .clausure {
   text-align: center;
+  font-size: 14px;
   margin: 20px 0 0;
 }
 </style>
