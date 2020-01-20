@@ -1,15 +1,18 @@
 # Tinder Łączności
-It's myy copy of tinder foro society of my school. It's a good way to get to know new people, which you might not even see in school corridors. 
+It's my copy of tinder for society of my school. It's a good way to get to know new people, which you might not even see in school corridors.
+ 
+THE PROJECT WASN'T FINALLY PUBLISHED, BUT IT WAS FUN.
 
-### Used technology: 
+## Used technology: 
 * VueJS
 * VueX
 * Firebase
+* vue-router 
 
-### Demo
+## Demo
 https://tinder-zsl.netlify.com/
 
-## Project setup
+### Project setup
 ```
 npm install
 ```
