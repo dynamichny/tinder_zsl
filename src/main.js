@@ -6,8 +6,9 @@ import router from "./router";
 import VueRellax from "vue-rellax";
 
 Vue.use(VueRellax);
-
-Vue.config.productionTip = false;
+Vue.config.devtools = false;
+Vue.config.debug = false;
+Vue.config.silent = true;
 
 new Vue({
   store,
