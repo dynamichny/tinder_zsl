@@ -1,5 +1,8 @@
 <template>
   <div class="preferences">
+    <vue-headful 
+      title="Ustaw preferencje"
+    />
     <h1>Ustaw preferencje</h1>
     <form @submit.prevent="setPreferences()">
       <p>Jakimi płciami jesteś zainteresowan{{ currentUser.plec == 'k' ? 'a' : 'y'}}?</p>

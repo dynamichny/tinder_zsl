@@ -1,16 +1,17 @@
 <template>
   <div class="myprofile">
+    <vue-headful title="Tinder Łączności" />
     <div class="overview">
       <div class="photo-container">
         <img src="@/assets/loading.svg" class="loading" />
         <img class="overview-photo" :src="photo" />
       </div>
-      <h2>{{name}}</h2>
+      <h2>{{ name }}</h2>
     </div>
     <div class="buttons">
-      <button @click="settings = true">Ustawienia profilu</button>
-      <button @click="preferences = true">Zmień preferencje</button>
-      <button @click="logout" class="logout">Wyloguj</button>
+      <a @click="settings = true">Ustawienia profilu</a>
+      <a @click="preferences = true">Zmień preferencje</a>
+      <a @click="logout" class="logout">Wyloguj</a>
     </div>
     <Preferences v-if="preferences" @save="preferences = false" />
     <MyProfileSettings v-if="settings" @save="settings = false" />
@@ -18,21 +19,21 @@
 </template>
 
 <script>
-import store from "@/store/index";
-import Preferences from "@/components/Preferences/Preferences.vue";
-import MyProfileSettings from "./Settings/MyProfileSettings.vue";
-import firebase from "firebase";
+import store from '@/store/index';
+import Preferences from '@/components/Preferences/Preferences.vue';
+import MyProfileSettings from './Settings/MyProfileSettings.vue';
+import firebase from 'firebase';
 
 export default {
-  name: "MyProfile",
+  name: 'MyProfile',
   components: {
     Preferences,
-    MyProfileSettings
+    MyProfileSettings,
   },
   data() {
     return {
       preferences: false,
-      settings: false
+      settings: false,
     };
   },
   computed: {
@@ -43,8 +44,8 @@ export default {
       let photoName = store.state.currentUser.photos[0];
       return store.state.currentUser.photos.length > 0
         ? `https://firebasestorage.googleapis.com/v0/b/tinder-zsl.appspot.com/o/profilePhotos%2Fthumb@256_${photoName}?alt=media`
-        : "https://komuna.warszawa.pl/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png";
-    }
+        : 'https://komuna.warszawa.pl/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png';
+    },
   },
   methods: {
     logout() {
@@ -53,18 +54,18 @@ export default {
         .signOut()
         .then(
           () => {
-            store.commit("logout");
+            store.commit('logout');
           },
           error => {
             alert(error);
-          }
+          },
         );
-    }
+    },
   },
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .overview {
   display: flex;
   flex-direction: column;
@@ -72,11 +73,13 @@ export default {
   justify-content: center;
   margin: 20px auto 0;
   max-width: 700px;
+  h2{
+    font-size: 26px;
+  }
 }
 .photo-container {
   width: 50vw;
   height: 50vw;
-  border-radius: 50%;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -85,18 +88,18 @@ export default {
   position: relative;
   max-width: 256px;
   max-height: 256px;
+  border: 1px solid black;
 }
 .overview-photo {
   width: 100%;
   height: 100%;
-  position:absolute;
+  position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
   top: 0;
   image-orientation: from-image;
   z-index: 10;
-
 }
 .loading {
   position: absolute;
@@ -110,22 +113,49 @@ export default {
 .buttons {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
-button {
+a {
   margin: 10px auto;
-  padding: 20px;
-  background: #151b1e;
-  color: white;
+  color: black;
+  padding: 5px 10px;
   border: none;
-  font-family: "Montserrat";
-  font-size: 18px;
+  font-family: 'Montserrat';
+  font-size: 16px;
   border-radius: 5px;
   max-width: 650px;
-  width: 80%;
+  position: relative;
+  font-weight: 600;
+  line-height: 20px;
+  z-index: 10;
+  cursor: pointer;
+  &::after {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 7px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(225deg, #dd4587, #ff8941);
+    z-index: 0;
+  }
 }
 .logout {
   margin: 30px auto;
-  background: #4d6369;
-  padding: 15px;
+  background: linear-gradient(225deg, #dd4587, #ff8a41be);
+  border-radius: 0;
+  color: white;
+  padding: 10px 30px;
+  transition: all .2s;
+  &::after{
+    display: none ;
+  }
+  &:hover{
+  background: rgb(241, 61, 61);
+
+  }
 }
 </style>

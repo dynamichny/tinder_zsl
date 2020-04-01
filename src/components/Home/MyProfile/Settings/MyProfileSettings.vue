@@ -170,6 +170,9 @@ export default {
     margin: auto;
     overflow: auto;
   }
+  h2{
+    font-size: 26px;
+  }
 }
 
 .photos {
@@ -193,6 +196,11 @@ export default {
     box-shadow: none;
     background: white;
     font-family: "Montserrat", Helvetica, Arial, sans-serif;
+    outline: none;
+    transition: all .2s;
+    &:focus{
+      border: 1px solid black;
+    }
   }
   h4 {
     margin: 20px 0 0;
@@ -203,19 +211,21 @@ h4 {
   padding: 10px;
 }
 button {
-  background: linear-gradient(225deg, #dd4587, #ff8941);
   font-family: "Montserrat", Helvetica, Arial, sans-serif;
   color: white;
   border: none;
-  padding: 20px 40px;
   margin: 30px auto 0;
-  border-radius: 5px;
-  font-size: 18px;
-  outline: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
-  width: 150px;
+  background: linear-gradient(225deg, #dd4587, #ff8941);
+  padding: 10px 50px;
+  font-size: 18px;
+  height: 50px;
+  width: 170px;
+  outline: none;
+  &:hover{
+    background: linear-gradient(45deg, #dd4587, #ff8941);
+  }
 }
 </style>

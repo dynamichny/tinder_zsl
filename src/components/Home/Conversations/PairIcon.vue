@@ -38,6 +38,9 @@ export default {
 <style scoped lang='scss'>
 .contact{
   padding: 5px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .image{
   cursor: pointer;
@@ -51,5 +54,9 @@ p{
   margin: 10px 0 0;
   font-weight: 600;
   font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100px;
 }
 </style>

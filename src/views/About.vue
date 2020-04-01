@@ -1,5 +1,8 @@
 <template>
   <div class="about">
+    <vue-headful 
+      title="Witaj! Tinder ZSŁ"
+    />
     <Hero />
     <Content id="info"/>
     <Contact id="contact"/>
@@ -30,4 +33,5 @@ export default {
   font-family: 'Montserrat', Helvetica, Arial, sans-serif;
   color: #414141;
 }
+
 </style>

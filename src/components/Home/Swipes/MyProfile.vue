@@ -1,5 +1,8 @@
 <template>
   <div class="myprofile">
+    <vue-headful 
+      title="Tinder Łączności"
+    />
     <div class="overview">
       <div class="photo-container">
         <img src="@/assets/loading.svg" class="loading">

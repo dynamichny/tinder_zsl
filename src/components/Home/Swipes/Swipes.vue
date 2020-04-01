@@ -1,5 +1,8 @@
 <template>
   <div class="swipes">
+    <vue-headful 
+      title="Tinder Łączności"
+    />
     <transition-group name="slide">
       <Poster
         v-for="(person, index) in matches "

@@ -1,5 +1,8 @@
 <template>
   <div class="home">
+    <vue-headful 
+      title="Tinder Łączności"
+    />
     <nav>
       <div>
         <img
