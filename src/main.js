@@ -9,9 +9,9 @@ import vueHeadful from 'vue-headful';
 Vue.use(VueRellax);
 Vue.component('vue-headful', vueHeadful);
 
-Vue.config.devtools = true;
-Vue.config.debug = true;
-Vue.config.silent = false;
+Vue.config.devtools = false;
+Vue.config.debug = false;
+Vue.config.silent = true;
 
 new Vue({
   store,
