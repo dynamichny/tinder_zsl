@@ -4,11 +4,14 @@ import store from "./store";
 import "./registerServiceWorker";
 import router from "./router";
 import VueRellax from "vue-rellax";
+import vueHeadful from 'vue-headful';
 
 Vue.use(VueRellax);
-Vue.config.devtools = false;
-Vue.config.debug = false;
-Vue.config.silent = true;
+Vue.component('vue-headful', vueHeadful);
+
+Vue.config.devtools = true;
+Vue.config.debug = true;
+Vue.config.silent = false;
 
 new Vue({
   store,
