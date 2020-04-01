@@ -1,39 +1,32 @@
 <template>
   <div class="login">
-    <div class="head">
-      <button class="close" @click.prevent="$emit('close')">Powrót</button>
-      <span>Logowanie</span>
-    </div>
+    <vue-headful title="Logowanie" />
     <form @submit.prevent="handleSubmit()">
       <input type="text" placeholder="Email" v-model="login" required />
-      <input type="password" placeholder="Password" v-model="password" required />
-      <a @click="passReset" class="passReset">Nie pamiętasz hasła?</a>
+      <input type="password" placeholder="Hasło" v-model="password" required />
       <button type="submit" :disabled="loading">
         <span v-if="!loading">Zaloguj</span>
         <img src="@/assets/button-loading.svg" alt="Loading..." v-if="loading" />
       </button>
+      <a @click="$emit('passReset')" class="passReset">Nie pamiętasz hasła?</a>
+      <a @click="$emit('switch')" class="passReset">Rejestracja</a>
     </form>
-    <PasswordReset v-if="isPasswordReset" @close="isPasswordReset = false" />
   </div>
 </template>
 
 <script>
-import firebase from "firebase";
-import db from "@/components/firebaseInit.js";
-import store from "@/store/index";
-import PasswordReset from "./PasswordReset.vue";
+import firebase from 'firebase';
+import db from '@/components/firebaseInit.js';
+import store from '@/store/index';
 
 export default {
-  name: "Login",
-  components: {
-    PasswordReset
-  },
+  name: 'Login',
   data() {
     return {
-      login: "",
-      password: "",
+      login: '',
+      password: '',
       loading: false,
-      isPasswordReset: false
+      isPasswordReset: false,
     };
   },
   methods: {
@@ -45,10 +38,10 @@ export default {
           .signInWithEmailAndPassword(this.login, this.password)
           .then(() => {
             this.loading = false;
-            db.collection("users")
+            db.collection('users')
               .doc(this.login)
               .onSnapshot(res => {
-                store.commit("setUser", res.data());
+                store.commit('setUser', res.data());
               });
           })
           .catch(err => {
@@ -59,73 +52,64 @@ export default {
     },
     passReset() {
       this.isPasswordReset = true;
-    }
-  }
+    },
+    switchToRegister() {},
+  },
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .login {
   box-sizing: border-box;
 }
 form {
   height: 100%;
-  max-width: 800px;
+  max-width: 600px;
   margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  align-items: center;
   box-sizing: border-box;
 }
 input {
-  background: white;
+  background: transparent;
   padding: 15px;
   margin: 10px;
   box-sizing: border-box;
   border: none;
-  border-radius: 5px;
-  font-family: "Montserrat";
+  border-bottom: 1px solid black;
+  font-family: 'Montserrat';
   outline: none;
-  transition: all 0.3s;
+  transition: all 0.2s;
   font-size: 16px;
+  width: 100%;
+  -webkit-appearance: none;
+  border-radius: 0;
   &:focus {
-    box-shadow: 0px 0px 10px rgb(0, 0, 0);
+    border-bottom: 2px solid black;
   }
 }
 
 button {
-  background: black;
+  background: linear-gradient(225deg, #dd4587, #ff8941);
   color: white;
   border: none;
-  padding: 15px;
-  font-family: "Montserrat";
+  padding: 10px 50px;
+  font-family: 'Montserrat';
   font-size: 18px;
-  margin: 30px 10px;
-  border-radius: 5px;
+  margin: 15px 10px 30px;
   height: 50px;
-}
-.head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  max-width: 800px;
-  margin: auto;
-  box-sizing: border-box;
-  padding: 10px;
-
-  button {
-    margin: 0;
-  }
-  span {
-    font-size: 24px;
-    font-weight: bold;
+  width: 170px;
+  outline: none;
+  &:hover {
+    background: linear-gradient(45deg, #dd4587, #ff8941);
   }
 }
 
 .passReset {
-  margin: 5px 10px;
-  font-size: 18px;
+  margin: 8px;
+  font-size: 16px;
   cursor: pointer;
 }
 </style>

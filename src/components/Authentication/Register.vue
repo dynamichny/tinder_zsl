@@ -1,37 +1,30 @@
 <template>
   <div class="register">
-    <div class="head">
-      <button class="close" @click.prevent="$emit('close')">Powrót</button>
-      <span>Rejestracja</span>
-    </div>
+    <vue-headful title="Rejestracja" />
     <form @submit.prevent="handleSubmit()">
       <input type="email" placeholder="Email" v-model="login" required />
       <input type="password" placeholder="Haslo" v-model="password" required />
       <input type="password" placeholder="Podaj haslo ponownie" v-model="repassword" required />
       <input type="text" placeholder="Imie" v-model="firstname" required />
-      <div class="klasa select">
-        <label for="klasa">Klasa</label>
+      <div class="selects">
         <select name="klasa" v-model="klasa" required>
+          <option :value="null" :diabled="true" selected>klasa</option>
           <option value="0">1 po podstawówie</option>
           <option value="1">1 po gimnazjum</option>
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>
         </select>
-      </div>
-      <div class="kierunek select">
-        <label for="kierunek">Kierunek</label>
         <select name="kierunek" v-model="kierunek" required>
+          <option :value="null" :diabled="true" selected>kierunek</option>
           <option value="fototechnik">fototechnik</option>
           <option value="automatyk">automatyk</option>
           <option value="informatyk">informatyk</option>
           <option value="elektronik">elektronik</option>
           <option value="teleinformatyk">teleinformatyk</option>
         </select>
-      </div>
-      <div class="plec select">
-        <label for="plec">Płeć</label>
         <select name="plec" v-model="plec" required>
+          <option :value="null" :diabled="true" selected>płeć</option>
           <option value="k">Kobieta</option>
           <option value="m">Mężczyzna</option>
           <option value="i">Inne</option>
@@ -41,27 +34,28 @@
         <span v-if="!loading">Załóż konto</span>
         <img src="@/assets/button-loading.svg" alt="Loading..." v-if="loading" />
       </button>
+      <a @click="$emit('switch')" class="passReset">Logowanie</a>
     </form>
   </div>
 </template>
 
 <script>
-import firebase from "firebase";
-import db from "@/components/firebaseInit.js";
-import store from "@/store/index";
+import firebase from 'firebase';
+import db from '@/components/firebaseInit.js';
+import store from '@/store/index';
 
 export default {
-  name: "Register",
+  name: 'Register',
   data() {
     return {
-      login: "",
-      password: "",
-      repassword: "",
-      firstname: "",
+      login: '',
+      password: '',
+      repassword: '',
+      firstname: '',
       klasa: null,
       kierunek: null,
       plec: null,
-      loading: false
+      loading: false,
     };
   },
   methods: {
@@ -79,7 +73,7 @@ export default {
           .auth()
           .createUserWithEmailAndPassword(this.login, this.password)
           .then(() => {
-            db.collection("users")
+            db.collection('users')
               .doc(this.login)
               .set({
                 email: this.login,
@@ -91,22 +85,22 @@ export default {
                 preferences: {
                   isSet: false,
                   genders: [],
-                  classes: []
+                  classes: [],
                 },
                 photos: [],
-                description: "",
-                instagram: "",
-                snapchat: ""
+                description: '',
+                instagram: '',
+                snapchat: '',
               });
             firebase
               .auth()
               .signInWithEmailAndPassword(this.login, this.password)
               .then(() => {
                 this.loading = false;
-                db.collection("users")
+                db.collection('users')
                   .doc(this.login)
                   .onSnapshot(res => {
-                    store.commit("setUser", res.data());
+                    store.commit('setUser', res.data());
                   });
               });
           })
@@ -115,78 +109,81 @@ export default {
             alert(err);
           });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .register {
   box-sizing: border-box;
 }
 form {
   height: 100%;
-  max-width: 800px;
-  margin: auto;
+  max-width: 600px;
+  margin: auto auto 30px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   box-sizing: border-box;
+  align-items: center;
 }
 input,
 select {
-  background: white;
+  background: transparent;
   padding: 15px;
   margin: 10px;
   box-sizing: border-box;
   border: none;
-  border-radius: 5px;
-  font-family: "Montserrat";
+  border-bottom: 1px solid black;
+  font-family: 'Montserrat';
   outline: none;
-  transition: all 0.3s;
+  transition: all 0.2s;
   font-size: 16px;
+  width: 100%;
+  -webkit-appearance: none;
+  border-radius: 0;
   &:focus {
-    box-shadow: 0px 0px 10px rgb(0, 0, 0);
+    border-bottom: 2px solid black;
   }
 }
-.select {
-  margin: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 18px;
-  box-sizing: border-box;
-}
-button {
-  background: black;
-  color: white;
-  border: none;
-  padding: 15px;
-  font-family: "Montserrat";
-  font-size: 18px;
-  margin: 10px;
-  border-radius: 5px;
-  height: 50px;
-}
-.head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  max-width: 800px;
-  margin: auto;
-  box-sizing: border-box;
-  padding: 10px;
-  button {
-    margin: 0;
-  }
-  span {
-    font-size: 24px;
-    font-weight: bold;
-  }
+select {
+  margin: 0;
+  width: 100%;
 }
 
+button {
+  background: linear-gradient(225deg, #dd4587, #ff8941);
+  color: white;
+  border: none;
+  padding: 10px 50px;
+  font-family: 'Montserrat';
+  font-size: 18px;
+  margin: 20px 10px 30px;
+  height: 50px;
+  outline: none;
+  &:hover {
+    background: linear-gradient(45deg, #dd4587, #ff8941);
+  }
+}
+.selects {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 10px;
+  @media (max-width: 550px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (max-width: 350px) {
+    grid-template-columns: 1fr;
+  }
+}
 label {
   font-size: 20px;
+}
+.passReset {
+  margin: 5px 10px;
+  font-size: 16px;
+  cursor: pointer;
 }
 </style>

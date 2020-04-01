@@ -1,61 +1,51 @@
 <template>
   <div class="authentication">
-    <transition name="apear">
-      <Register v-if="isRegister" @close="isRegister = false" />
-    </transition>
-    <transition name="apear">
-      <Login v-if="isLogin" @close="isLogin = false" />
-    </transition>
-    <transition name="apear">
-      <div v-if="!isRegister && !isLogin">
-        <div class="authentication__title" @click="$router.push({ path: '/about' })">
-          <img src="@/assets/logo_white.png" />
-          <h1>tinder łączności</h1>
-        </div>
-        <div class="authentication__buttons">
-          <button @click="isLogin = true">Zaloguj</button>
-          <button @click="isRegister = true">Zarejestruj</button>
-        </div>
-      </div>
-    </transition>
+    <div class="authentication__title" @click="$router.push({ path: '/about' })">
+      <img src="@/assets/logo_colored.svg" />
+      <h1>tinder łączności</h1>
+    </div>
+    <Login v-if="isLogin" @switch="isLogin = false; isRegister = true" @passReset="passReset = true; isLogin = false" />
+    <Register v-if="isRegister" @switch="isLogin = true; isRegister = false" />
+    <PasswordReset v-if="passReset" @login="isLogin = true; passReset = false" @register="isRegister = true; passReset = false"/>
   </div>
 </template>
 
 <script>
-import Register from "./Register.vue";
-import Login from "./Login.vue";
+import Register from './Register.vue';
+import Login from './Login.vue';
+import PasswordReset from "./PasswordReset.vue";
 
 export default {
-  name: "Authentication",
+  name: 'Authentication',
   components: {
     Register,
-    Login
+    Login,
+    PasswordReset
   },
   data() {
     return {
       isRegister: false,
-      isLogin: false
+      isLogin: true,
+      passReset: false,
     };
-  }
+  },
 };
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .authentication {
-  background: linear-gradient(#dd4587, #ff8941);
+  background: white;
   margin: 0;
   min-height: 100%;
   box-sizing: border-box;
   padding: 20px;
 
   &__title {
-    position: absolute;
-    top: 20px;
-    left: 0;
-    right: 0;
-    margin: auto;
+    margin: auto auto 55px;
     text-align: center;
-    color: white;
+    background: -webkit-linear-gradient(#dd4587, #ff8941);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     cursor: pointer;
     img {
       width: 200px;
@@ -70,12 +60,13 @@ export default {
     left: 0;
     right: 0;
     button {
-      font-family: "Montserrat";
+      font-family: 'Montserrat';
       font-weight: bold;
       width: 90%;
-      max-width: 500px;
-      font-size: 20px;
-      background: white;
+      max-width: 300px;
+      font-size: 22px;
+      background: linear-gradient(#dd4587, #ff8941);
+      color: white;
       border: none;
       padding: 20px;
       box-sizing: border-box;
